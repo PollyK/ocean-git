@@ -1,0 +1,351 @@
+/* Basic  ---------------------------------------- */
+
+.clear { clear: both; }
+
+body {
+    background: white;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 12px;
+    color: #646464;
+    text-align: center;
+}
+
+#wrapper {
+    text-align: left;
+    width: 930px;
+    margin: 0 auto;
+}
+
+a {
+    color: #2fbdc3;
+}
+
+/* Logo  ---------------------------------------- */
+
+h1 {
+    background: url("../img/logo.png") no-repeat scroll left top transparent;
+    height: 80px;
+    margin: 10px auto 12px;
+    width: 300px;
+}
+
+h1 a {
+    display: block;
+    width: 225px;
+    height: 28px;
+}
+
+h1 span { display: none; }
+
+/* Main Navigation ---------------------------------------- */
+
+#mainNav {
+    width: 918px;
+    height: 37px;
+    padding: 6px;
+    background: url(../img/top-menu-bg.gif) no-repeat left top; 
+    /* We used a background image making the thick border and the thin one to keep the html structure simple */
+}
+
+#mainNav li {
+    float: left;
+    height: 37px;
+    border-right: 1px solid #c1dde1;
+}
+
+#mainNav li a {
+    display: block;
+    float: left;
+    height: 37px;
+    font-weight: bold;
+    line-height: 37px;
+    text-decoration: none;
+    color: #646464;
+    padding: 0 20px;
+}
+
+#mainNav li.logout {
+    float: right;
+    border-left: 1px solid #c1dde1;
+    border-right: none;
+}
+
+#mainNav li a:hover { background: #fdfcf6; }
+
+#mainNav li a.active, #mainNav li a.active {
+    background: #f0f0f0 url(../img/top-menu-item-bg.gif) repeat-x left top;
+    color: #454545;
+}
+
+/* Container ---------------------------------------- */
+
+#containerHolder {
+    background: #eee;
+}
+
+
+#container {
+    background: #fff url(../img/content.gif) repeat-y left top;
+    width: 918px;
+}
+
+/* Sidebar ---------------------------------------- */
+
+#sidebar {
+    width: 223px!important;
+    float: left;
+}
+
+#sidebar .sideNav { width: 227px; }
+
+#sidebar .sideNav li { border-bottom: 1px solid #CFEBEF; width: 224px; }
+
+#sidebar .sideNav li a {
+    display: block;
+    color: #646464;
+    background: #f0f5f5;
+    text-decoration: none;
+    height: 29px;
+    line-height: 29px;
+    padding: 0 19px;
+    width: 187px;
+}
+
+#sidebar .sideNav li a:hover { background: #fdfcf6; }
+
+#sidebar .sideNav li a.active, #sidebar .sideNav li a.active:hover {
+    background: #F0F9F9;
+    color: #1c999d;
+}
+
+/* Breadcrumb ---------------------------------------- */
+
+h2 {
+    color: #646464;
+    font-size: 16px;
+    line-height: 16px;
+    font-weight: bold;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+h2 a {
+    color: #646464;
+    text-decoration: none;
+}
+
+h2 a.active { color: #237986; }
+
+h2 a:hover { text-decoration: underline; }
+
+/* Content ---------------------------------------- */
+
+#main {
+    width: 660px;
+    float: right;
+}
+
+h3 {
+    font-size: 14px;
+    line-height: 14px;
+    font-weight: bold;
+    color: #1C999D;
+    margin: 20px 0 10px;
+    border-top: 1px solid #c1dde1;
+    padding-top: 10px;
+}
+
+#main table {
+    border-top: 1px solid #c1dde1;
+    width: 663px;
+}
+
+#main table tr td {
+    background: #f6f6f6;
+    padding: 0px 20px;
+    height: 29px;
+    line-height: 29px;
+    border-bottom: 1px solid #c1dde1;
+}
+
+#main table tr.odd td {
+    background: #fbfbfb;
+}
+
+#main table tr:hover td { background: #fdfcf6; }
+
+#main table .action {
+    text-align: right;
+    padding: 0 20px 0 10px;
+}
+
+#main table tr .action a { margin: 0 0 0 10px; text-decoration: none; color: #9b9b9b; }
+#main table tr:hover .action .edit { color: #c5a059; }
+#main table tr:hover .action .delete { color: #a02b2b; }
+#main table tr:hover .action .view { color: #55a34a; }
+
+#main table tr:hover .action a:hover { text-decoration: underline; }
+
+#main fieldset {
+    border: 1px solid #c1dde1;
+    padding: 19px;
+    margin: 0 0 20px 0;
+    background: #fbfbfb;
+}
+
+#main fieldset p { margin: 0 0 14px 0; float: left; width: 100%;  }
+
+#main fieldset label {
+    display: block;
+    width: 100%;
+    margin: 0 0 7px 0;
+    line-height: 12px;
+}
+
+#main fieldset .text-long {
+    border: 1px solid #c1dde1;
+    background: #fff url(../img/input-shaddow.gif) no-repeat left top;
+    font: 11px Arial, Helvetica, sans-serif;
+    color: #646464;
+    padding: 5px 7px;
+    width: 264px;
+    float: left;
+    margin: 0 10px 0 0;
+}
+
+#main fieldset .text-medium {
+    border: 1px solid #c1dde1;
+    background: #fff url(../img/input-shaddow.gif) no-repeat left top;
+    font: 11px Arial, Helvetica, sans-serif;
+    color: #646464;
+    padding: 5px 7px;
+    width: 124px;
+    float: left;
+    margin: 0 10px 0 0;
+}
+
+#main fieldset .text-small {
+    border: 1px solid #c1dde1;
+    background: #fff url(../img/input-shaddow.gif) no-repeat left top;
+    font: 11px Arial, Helvetica, sans-serif;
+    color: #646464;
+    padding: 5px 7px;
+    width: 44px;
+    float: left;
+    margin: 0 10px 0 0;
+}
+
+#main fieldset .text-long:focus, 
+#main fieldset .text-medium:focus,
+#main fieldset .text-small:focus,
+#main fieldset textarea:focus { background: #fdfcf6 url(../img/input-shaddow-hover.gif) no-repeat left top; }
+
+#main fieldset textarea {
+    border: 1px solid #c1dde1;
+    background: #fff url(../img/input-shaddow.gif) no-repeat left top;
+    font: 11px Arial, Helvetica, sans-serif;
+    color: #646464;
+    padding: 5px 7px;
+    width: 364px;
+    float: left;
+    margin: 0 10px 0 0;
+    height: 148px;
+    overflow: hidden;
+}
+
+.button-submit {
+    font: 11px Arial, Helvetica, sans-serif;
+    color: #646464;
+    width: 94px;
+    height: 29px;
+    cursor: pointer;
+    border: none;
+    background: url(../img/button-submit.gif) no-repeat left top;
+}
+
+/* Footer ---------------------------------------- */
+
+#footer {
+    margin: 10px 0 30px 0;
+    font-size: 11px;
+    line-height: 11px;
+    color: #9B9B9B;
+    padding: 0 0 0 5px;
+}
+
+#footer a { color: #9B9B9B; }
+
+#footer a:hover { text-decoration: none; }
+
+#products_length, #products_filter {
+    float: left;
+    margin-bottom: 19px;
+    margin-right: 32px;
+    margin-top: 15px;
+}
+
+#products th {
+    border-bottom: 1px solid #c1dde1;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+#table-faq table {
+    width: 663px;
+    border-top: 1px solid #c1dde1;
+}
+
+#table-faq table td {
+    border-bottom: 1px solid #c1dde1;
+    height: 24px;
+    line-height: 29px;
+    text-align: left;
+}
+
+#table-faq table td:last-child {
+    text-align: right;
+}
+
+.articles-form input {
+}
+
+.articles-form textarea {
+    margin-bottom: 20px;
+    width: 400px;
+}
+
+.articles-row {
+    height: 25px;
+    margin-bottom: 10px;
+}
+
+.order-list {
+    margin-bottom: 10px;
+    cursor: pointer;
+}
+
+.order-list:hover {
+    color: #2FBDC3;
+}
+
+.block-input-admin input {
+    height: 25px;
+    margin-bottom: 10px;
+}
+
+.block-input-admin textarea {
+    margin-bottom: 20px;
+    width: 400px;
+}
+
+.block-input-admin img {
+    margin-bottom: 10px;
+}
+
+.color-blue {
+    color: #0b7986;
+}
+
+table td {
+    padding-bottom: 9px;
+}

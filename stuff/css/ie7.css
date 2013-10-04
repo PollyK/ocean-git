@@ -1,0 +1,31 @@
+#main fieldset p { margin: 0 0 7px 0; } /* half of the normal bottom margin */
+
+.jNiceSelectWrapper div span {
+	padding: 9px 7px 0;
+}
+#search {
+    border: 1px solid #1293ab;
+    height: 28px;
+}
+
+ul#nav a {
+    font-size: 15px;
+    letter-spacing: 0.09em;
+    font-family: verdana;
+}
+
+
+ul#nav li {
+    margin-right: 35px;
+}
+
+h1 {
+    font: 18px/18px verdana;
+    letter-spacing: 0.1em;
+    color: #fff;
+    margin-bottom: 32px;
+}
+
+.all-right-block h1 {
+    background: none;
+}

@@ -1,0 +1,342 @@
+/* 
+    Document   : style
+    Created on : 16.05.2013, 14:55:15
+    Author     : Polly
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+html {
+    margin: 0;
+    width: 100%;
+    min-height: 820px;
+}
+
+
+
+body {
+    height: 100%;
+    width: 100%;
+    margin: 0 auto;
+    font: 14px arial;
+    letter-spacing: 0.005em;
+    color: #505058;
+}
+
+.day {
+    background: rgb(102,176,200); /* Old browsers */
+    /* IE9 SVG, needs conditional override of 'filter' to 'none' */
+    background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzY2YjBjOCIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjMyJSIgc3RvcC1jb2xvcj0iIzFiOTBjNSIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9Ijc3JSIgc3RvcC1jb2xvcj0iIzExMmQzMSIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiMwODIyMjkiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+    background: -moz-linear-gradient(top,  rgba(102,176,200,1) 0%, rgba(27,144,197,1) 32%, rgba(17,45,49,1) 77%, rgba(8,34,41,1) 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(102,176,200,1)), color-stop(32%,rgba(27,144,197,1)), color-stop(77%,rgba(17,45,49,1)), color-stop(100%,rgba(8,34,41,1))); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top,  rgba(102,176,200,1) 0%,rgba(27,144,197,1) 32%,rgba(17,45,49,1) 77%,rgba(8,34,41,1) 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top,  rgba(102,176,200,1) 0%,rgba(27,144,197,1) 32%,rgba(17,45,49,1) 77%,rgba(8,34,41,1) 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top,  rgba(102,176,200,1) 0%,rgba(27,144,197,1) 32%,rgba(17,45,49,1) 77%,rgba(8,34,41,1) 100%); /* IE10+ */
+    background: linear-gradient(to bottom,  rgba(102,176,200,1) 0%,rgba(27,144,197,1) 32%,rgba(17,45,49,1) 77%,rgba(8,34,41,1) 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#66b0c8', endColorstr='#082229',GradientType=0 ); /* IE6-8 */
+
+
+}
+
+.night {
+    background: rgb(0,22,20); /* Old browsers */
+    /* IE9 SVG, needs conditional override of 'filter' to 'none' */
+    background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzAwMTYxNCIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiMwMTE2MTciIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+    background: -moz-linear-gradient(top,  rgba(0,22,20,1) 0%, rgba(1,22,23,1) 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(0,22,20,1)), color-stop(100%,rgba(1,22,23,1))); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top,  rgba(0,22,20,1) 0%,rgba(1,22,23,1) 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top,  rgba(0,22,20,1) 0%,rgba(1,22,23,1) 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top,  rgba(0,22,20,1) 0%,rgba(1,22,23,1) 100%); /* IE10+ */
+    background: linear-gradient(to bottom,  rgba(0,22,20,1) 0%,rgba(1,22,23,1) 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#001614', endColorstr='#011617',GradientType=0 ); /* IE6-8 */
+    padding-top: 50px;
+}
+
+.float { float: left; }
+.float-right { float: right; }
+
+a { color: #b62e34; font: 13px "trebucb", "trebucb-ie"; cursor: pointer;}
+a:hover { color: #c74a03; }
+a img { border: medium none; }
+a { outline: none; text-decoration: none; }
+
+ul,li { margin: 0; padding: 0; list-style: none; }
+
+.clear-block:after{ height: 0; clear: both; content: "."; display: block; visibility: hidden;}
+.clear-block{ display: block; }
+
+h1,h2,h3,h4,h5,h6, p {margin: 0}
+h1 {font: 20px "trebucb", "trebucb-ie"; color: #3d597d;}
+h2 {font: 18px "trebucb", "trebucb-ie";color: #3d597d;}
+h2.white {font: 18px "trebucb", "trebucb-ie"; color: #fff;}
+h3 {font: 15px "trebucb", "trebucb-ie";color: #505058;}
+h3.white {font: 15px "trebucb", "trebucb-ie"; color: #fff;}
+h3.red {font: 15px "trebucb", "trebucb-ie"; color: #b62e34;}
+h3.small {font: 14px "trebucb", "trebucb-ie";color: #505058;}
+h4.blue {font: 13px "trebucb", "trebucb-ie"; color: #25528b;}
+h4.gray {font: 13px "trebucb", "trebucb-ie"; color: #505058;}
+h5 {font: 12px "trebucb", "trebucb-ie";}
+h6 {font: 11px "trebucb", "trebucb-ie";}
+
+.font-11 {font-size: 11px;}
+.font-12 {font-size: 12px;}
+.font-13 {font-size: 13px;}
+.font-15 {font-size: 15px;}
+
+.color-green {color: #3bdfde;}
+
+.index-page {
+    width: 100%;
+    margin: 0 auto;
+    height: 100%;
+}
+
+.index-page td {
+    border: 0;
+    border-collapse: collapse;
+    padding: 0;
+}
+
+.day .background-start {
+    background: url("../img/img-back-index.png") no-repeat scroll center center transparent;
+    min-height: 990px;
+    width: 1520px;
+    margin: 0 auto;
+}
+
+.night .background-start {
+    height: 100%;
+}
+
+.night .block-stage {
+    padding-left: 240px;
+    padding-top: 110px;
+}
+
+.day .block-stage {
+    padding-top: 92px;
+    height: 250px;
+}
+
+.day .block-logo {
+    height: 90px;
+}
+
+.night .block-logo {
+    padding-top: 70px;
+    padding-left: 220px;
+    height: 90px;
+}
+
+.block-logo a {
+    float: left;
+}
+
+.day .restaurant {
+    background: url("../img/restaurant-day-1.png") no-repeat scroll 0 0 transparent;
+    height: 80px;
+    width: 510px;
+    cursor: pointer;
+}
+
+.day .restaurant:hover {
+    background: url("../img/restaurant-day.png") no-repeat scroll 0 0 transparent;
+    height: 80px;
+    width: 510px;
+}
+
+.day .club {
+    background: url("../img/club-day-1.png") no-repeat scroll 0 0 transparent;
+    height: 90px;
+    width: 510px;
+    cursor: pointer;
+}
+
+.day .club:hover {
+    background: url("../img/club-day.png") no-repeat scroll 0 0 transparent;
+    height: 90px;
+    width: 510px;
+}
+
+.day .shop {
+    background: url("../img/shop-day-1.png") no-repeat scroll 0 0 transparent;
+    height: 80px;
+    width: 510px;
+    cursor: pointer;
+}
+
+.day .shop:hover {
+    background: url("../img/shop-day.png") no-repeat scroll 0 0 transparent;
+    height: 80px;
+    width: 510px;
+}
+
+.night .img-back {
+    background: url("../img/img-back-index2.jpg") no-repeat scroll center center transparent;
+    height: 789px;
+    margin: 0 auto;
+    position: relative;
+    width: 1100px;
+}
+
+
+.night .restaurant {
+    background: url("../img/restaurant-night-1.png") no-repeat scroll 0 0 transparent;
+    height: 80px;
+    width: 510px;
+    cursor: pointer;
+}
+
+.night .restaurant:hover {
+    opacity: 0;
+    transition: opacity 0.6s ease 0s;
+}
+
+.night .club {
+    background: url("../img/club-night-1.png") no-repeat scroll 0 0 transparent;
+    height: 90px;
+    width: 510px;
+    cursor: pointer;
+}
+
+.night .club:hover {
+    opacity: 0;
+    transition: opacity 0.6s ease 0s;
+}
+
+.night .shop {
+    background: url("../img/shop-night-1.png") no-repeat scroll 0 0 transparent;
+    height: 80px;
+    width: 510px;
+    cursor: pointer;
+}
+
+.night .shop:hover {
+    opacity: 0;
+    transition: opacity 0.6s ease 0s;
+}
+
+
+
+
+
+
+
+.day .logo-restaurant {
+    background: url("../img/logorestaurant-day-1.png") no-repeat scroll 0 0 transparent;
+    height: 90px;
+    width: 220px;
+}
+
+.day .logo-restaurant:hover {
+    background: url(../img/logorestaurant-day.png) no-repeat;
+    width: 220px;
+    height: 90px;
+}
+
+.day .logo-club {
+    background: url("../img/logoclub-day-1.png") no-repeat scroll 0 0 transparent;
+    height: 90px;
+    width: 230px;
+}
+
+.day .logo-club:hover {
+    background: url(../img/logoclub-day.png) no-repeat;
+    width: 230px;
+    height: 90px;
+}
+
+.day .logo-shop {
+    background: url("../img/logoshop-day-1.png") no-repeat scroll 0 0 transparent;
+    height: 90px;
+    width: 190px;
+}
+
+.day .logo-shop:hover {
+    background: url(../img/logoshop-day.png) no-repeat;
+    width: 190px;
+    height: 90px;
+}
+
+.night .logo-restaurant {
+    background: url("../img/logorestaurant-night-1.jpg") no-repeat scroll 0 0 transparent;
+    height: 90px;
+    width: 220px;
+}
+
+.night .logo-restaurant:hover {
+    background: url(../img/logorestaurant-night.jpg) no-repeat;
+    width: 220px;
+    height: 90px;
+}
+
+.night .logo-club {
+    background: url("../img/logoclub-night-1.jpg") no-repeat scroll 0 0 transparent;
+    height: 90px;
+    width: 230px;
+}
+
+.night .logo-club:hover {
+    background: url(../img/logoclub-night.jpg) no-repeat;
+    width: 230px;
+    height: 90px;
+}
+
+.night .logo-shop {
+    background: url("../img/logoshop-night-1.jpg") no-repeat scroll 0 0 transparent;
+    height: 90px;
+    width: 190px;
+}
+
+.night .logo-shop:hover {
+    background: url(../img/logoshop-night.jpg) no-repeat;
+    width: 190px;
+    height: 90px;
+}
+
+.time {
+    height: 128px;
+    margin: 46px auto 0;
+}
+
+.day .time {
+    width: 1090px;
+    height: 128px;
+    margin: 48px auto 0;
+
+}
+
+#ny, #kyiv, #local {
+    margin-right: 11px;  
+}
+
+#local {
+    margin-left: 535px;
+}
+
+.logo-1 {
+    background: url("../img/logo-1.png") no-repeat scroll 0 0 transparent;
+    width:590px;
+    height: 283px;
+    margin: 50px auto 0;
+}
+
+.day .img-back {
+    background: url("../img/ocean.png") no-repeat scroll 0 0 transparent;
+    width: 1520px;
+    height: 990px;
+}
+
+.hight .hight-div {
+    width: 1100px; 
+    min-height: 820px; 
+    margin: 0 auto; 
+    position: relative; 
+}
+
+.layer {
+    height: 432px;
+    padding-top: 258px;
+    padding-left: 450px;
+}
+

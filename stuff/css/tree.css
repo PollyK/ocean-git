@@ -1,0 +1,165 @@
+
+
+.Container {
+    padding: 0;
+    margin: 0;
+}
+
+.Container li {
+    list-style-type: none;
+}
+
+
+/* indent for all tree children excepts root */
+.Node {
+    background-position : top left;
+    background-repeat : repeat-y;
+    margin-left: 18px;
+    zoom: 1;
+}
+
+.IsRoot {
+    margin-left: 0;
+}
+
+
+/* left vertical line (grid) for all nodes */
+.IsLast {
+    background-repeat : no-repeat;
+}
+
+.ExpandOpen .Expand {
+    background-image: url(img/expand_minus.gif);
+}
+
+/* closed is higher priority than open */
+.ExpandClosed .Expand {
+    background-image: url(img/expand_plus.gif);
+}
+
+.level_1 .level_2 .ExpandOpen .level_3 .level_4 .IsLastmy {
+   background: none; 
+}
+.level_1 .level_2 .ExpandOpen .level_3 .level_4 li {
+    margin-bottom: -1px;
+}
+.level_1 .level_2 .ExpandOpen .level_3 li {
+    margin-bottom: 2px;
+}
+
+
+.level_1 .level_2 .ExpandOpen  .level_3 .Expand {
+    background: url("../img/line_1_1.png") no-repeat;
+    width: 18px;
+    height: 12px;
+    margin-right: 2px;
+    margin-top: 4px;
+}
+.level_1 .level_2 .ExpandClosed .level_3 .Expand {
+    background: url("../img/line_1.png") no-repeat ;
+    width: 18px;
+    height: 12px;
+    margin-right: 2px;
+    margin-top: 4px;
+}
+.level_1 .level_2 .ExpandOpen  .level_3 .IsLastmy {
+    background: url("../img/line_1_2.png") no-repeat;
+    width: 18px;
+    height: 12px;
+    margin-right: 2px;
+    margin-top: 4px;
+    float: left;
+}
+
+
+.level_1 .level_2 .ExpandOpen .Expand {
+    background: url("../img/line_2_1.png") no-repeat;
+    width: 29px;
+}
+.level_1 .level_2 .ExpandClosed  .Expand {
+    background: url("../img/line_2.png") no-repeat ;
+    width: 29px;
+    margin-top: 4px;
+}
+.level_1 .ExpandOpen  .level_2 .IsLastmy {
+    background: url("../img/line_2_2.png") no-repeat;
+    width: 29px;
+    height: 15px;
+    margin-right: 5px;
+    margin-top: 4px;
+    float: left;
+}
+
+
+.level_1 .ExpandOpen .Expand {
+    background: url("../img/line_3_1.png") no-repeat;
+    width: 29px;
+    transparent;
+    margin-right: 5px;
+}
+.level_1 .ExpandClosed  .Expand {
+    background: url("../img/line_3.png") no-repeat ;
+    width: 29px;
+    margin-right: 5px;
+}
+
+
+.level_1 li.Node {
+    margin-left: 0px;
+    margin-bottom: 7px;
+    text-shadow: 0 0 2px #002C3E;
+}
+
+.level_1 .level_2 li.Node {
+    margin-left: 29px;
+}
+
+.level_1 .level_2 .level_3 li.Node {
+    margin-left: 20px;
+}
+
+ul.level_2 {margin-bottom: 16px;}
+
+.level_1 .level_2 .level_3 .level_4 li.Node {
+   margin-left: 0; 
+}
+/* highest priority */
+
+
+.Content {
+    min-height: 18px;
+    margin-left:0;
+}
+
+* html .Content {
+    height: 18px;
+}
+
+.Expand {
+    width: 18px;
+    height: 18px;
+    float: left;
+}
+
+
+.ExpandOpen .Container {
+        display: block;
+}
+
+.ExpandClosed .Container {
+        display: none;
+}
+
+.ExpandOpen .Expand, .ExpandClosed .Expand {
+        cursor: pointer;
+}
+.ExpandLeaf .Expand {
+        cursor: auto;
+}
+
+.ExpandLoading   {
+    width: 18px;
+    height: 18px;
+    float: left;
+    background-image: url(img/expand_loading.gif);
+}
