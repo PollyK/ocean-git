@@ -5,6 +5,31 @@ if (!defined('BASEPATH'))
 
 class Welcome extends CI_Controller {
 
+    public function __construct() {
+        parent::__construct();
+        $difference = 0;
+        $last_published_news = $this->articles_model->get_last_article();
+
+        if ($last_published_news) {
+            if ($last_seen_news_id = get_cookie('last_news_update_id')) {
+                $difference = $this->articles_model->get_new_articles_amount($last_seen_news_id);
+            } else {
+                $last_seen_news_id = $last_published_news->id;
+                
+                $cookie_last_news_id = array(
+                    'name' => 'last_news_update_id',
+                    'value' => $last_seen_news_id,
+                    'expire' => '8650000',
+                    'path' => '/'
+                );
+                set_cookie($cookie_last_news_id);
+            }
+        } 
+        //var_dump($difference, $last_seen_news_id);die;
+        
+        $this->session->set_userdata('news_unread', $difference);
+    }
+
     public function index() {
         $data['day_night'] = 'day';
         $time_local = (int) date('H', time());
@@ -154,14 +179,14 @@ class Welcome extends CI_Controller {
             'expire' => '8650000',
             'path' => '/'
         );
-        
+
         $cookie_phone = array(
             'name' => 'order_phone',
             'value' => $contact['contact_phone'],
             'expire' => '8650000',
             'path' => '/'
         );
-        
+
         $cookie_creds = array(
             'name' => 'order_creds',
             'value' => $contact['contact_dop'],
@@ -282,6 +307,21 @@ class Welcome extends CI_Controller {
 
     public function news() {
         $this->assign_left_panel($data);
+
+        $last_published_news = $this->articles_model->get_last_article();
+
+
+        if ($last_published_news) {
+            $last_seen_news_id = $last_published_news->id;
+            $cookie_last_news_id = array(
+                'name' => 'last_news_update_id',
+                'value' => $last_seen_news_id,
+                'expire' => '8650000',
+                'path' => '/'
+            );
+            set_cookie($cookie_last_news_id);
+            $this->session->set_userdata('news_unread', 0);
+        }
 
         $articles = $this->articles_model->get_articles();
         $data['news'] = $articles;

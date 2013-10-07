@@ -283,10 +283,9 @@
                 <li <?php if (!isset($alias)) { ?> class="active" <?php } ?>>
                     <a href="<?php echo SITE_URL; ?>welcome/news">
                         Новости
-                        <span class="message-news">1</span>
+                        <span <?php if($this->session->userdata('news_unread')){ ?>  class="message-news" ><?php echo $this->session->userdata('news_unread');?></span> <?php } ?>
                     </a>
                 </li>
-
 
                 <li <?php if (isset($alias) && in_array($alias, array('about', 'discount', 'gallery', 'faq'))) { ?> class="active" <?php } ?>>
                     <a href="<?php echo SITE_URL; ?>welcome/page/about">Для покупателя</a>

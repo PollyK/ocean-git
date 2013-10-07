@@ -49,5 +49,25 @@ class articles_model extends CI_Model {
         $this->db->where('id', $id);
         $this->db->delete('articles');
     }
+    
+    public function get_last_article(){
+        $this->db->order_by('id','DESC');
+        $result = $this->db->get('articles',1,0);
+        
+        if($result->num_rows()){
+            $res = $result->row();
+            return $res;
+        }else{
+            return false;
+        }
+    }
+    
+    public function get_new_articles_amount($start_id){
+        $this->db->where('id >',$start_id);
+        $result = $this->db->get('articles');
+        
+        return $result->num_rows();
+        
+    }
 
 }

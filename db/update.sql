@@ -1,0 +1,1 @@
+ALTER TABLE `banners` ADD `on_flash` ENUM( '0', '1' ) NOT NULL DEFAULT '0' AFTER `visible` 
