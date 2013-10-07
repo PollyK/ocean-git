@@ -494,6 +494,7 @@ EOH;
 
             $update_banner['banner_header'] = $this->input->post('title');
             $update_banner['visible'] = $this->input->post('is_published');
+            $update_banner['on_flash'] = $this->input->post('on_flash');
             $update_banner['date'] = date('Y-m-d H:i:s');
             $update_banner['banner_link_to_article'] = $this->input->post('article_id');
 
@@ -507,7 +508,8 @@ EOH;
                 exec($cmd);
                 $update_banner['banner_photo'] = $uploaded_filename;
             }
-            $this->banners_model->update_banner($banner_id, $update_banner);
+            $this->banners_model->remove_banner($banner_id);
+            $this->banners_model->create_banner($update_banner);
             set_success_message("Баннер успешно Обновлен");
             redirect(SITE_URL . "admin/banners");
         }
@@ -531,6 +533,7 @@ EOH;
             $insert_banner['banner_photo'] = $uploaded_filename;
             $insert_banner['banner_header'] = $this->input->post('title');
             $insert_banner['visible'] = $this->input->post('is_published');
+            $insert_banner['on_flash'] = $this->input->post('on_flash');
             $insert_banner['date'] = date('Y-m-d H:i:s');
             $insert_banner['banner_link_to_article'] = $this->input->post('article_id');
 
@@ -550,7 +553,6 @@ EOH;
             $available_articles = $this->articles_model->get_articles();
             $data['available_articles'] = $available_articles;
             $data['banner'] = $banner;
-
             $data['active_page'] = "banners";
             $data['active_subpage'] = "banners";
             $data['nav_menu'] = $this->nav_items;

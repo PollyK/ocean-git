@@ -17,6 +17,11 @@
     </div>
     
     <div class="articles-row">
+        Флешевый баннер?<br>
+        <input type="checkbox"  name="on_flash" value="1"/> 
+    </div>
+    
+    <div class="articles-row">
         Ссылка на новость<br>
         <?php if ($available_articles) { ?>
             <select name="article_id">

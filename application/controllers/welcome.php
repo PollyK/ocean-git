@@ -15,7 +15,7 @@ class Welcome extends CI_Controller {
                 $difference = $this->articles_model->get_new_articles_amount($last_seen_news_id);
             } else {
                 $last_seen_news_id = $last_published_news->id;
-                
+
                 $cookie_last_news_id = array(
                     'name' => 'last_news_update_id',
                     'value' => $last_seen_news_id,
@@ -24,9 +24,8 @@ class Welcome extends CI_Controller {
                 );
                 set_cookie($cookie_last_news_id);
             }
-        } 
+        }
         //var_dump($difference, $last_seen_news_id);die;
-        
         $this->session->set_userdata('news_unread', $difference);
     }
 
@@ -53,8 +52,25 @@ class Welcome extends CI_Controller {
     }
 
     public function catalog() {
+        $flash_screen = $this->banners_model->get_flash_banner();
+        if ($flash_screen) {
+            if(get_cookie('closed_flash_banner_id') !=  $flash_screen->id){
+                    $data['flash_banner'] = $flash_screen;
+            }
+        }
         $this->assign_left_panel($data);
         $this->load->view('catalog', $data);
+    }
+
+    public function disable_flash_banner() {
+        $banner_id = $this->input->post('banner_id');
+        $cookie = array(
+            'name' => 'closed_flash_banner_id',
+            'value' => $banner_id,
+            'expire' => '8650000',
+            'path' => '/'
+        );
+        set_cookie($cookie);
     }
 
     public function gallery() {

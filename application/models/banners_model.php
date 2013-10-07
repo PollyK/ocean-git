@@ -15,6 +15,11 @@ class banners_model extends CI_Model {
         }
     }
     
+    public function remove_banner($id){
+        $this->db->where('id', $id);
+        $this->db->delete('banners');
+    }
+    
     public function get_active_banners(){
         $this->db->where('visible', "1");
         $result = $this->db->get('banners');
@@ -31,6 +36,17 @@ class banners_model extends CI_Model {
         if($result->num_rows()){
             $res = $result->result();
             return $res[0];
+        }else{
+            return false;
+        }
+    }
+    
+    public function get_flash_banner(){
+        $this->db->where('on_flash','1');
+        $result = $this->db->get('banners');
+        if($result->num_rows()){
+            $res = $result->row();
+            return $res;
         }else{
             return false;
         }
