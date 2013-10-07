@@ -150,7 +150,7 @@ header {
     margin-top: 8px;
     margin-right: 20px;
     position: relative;
-	z-index:2001;
+    z-index:2001;
 }
 
 #search {
@@ -862,7 +862,7 @@ div.search-button:hover .fish-search {
     border: 1px solid #2da7c8;
 }
 
-#nav a.message-news {
+#nav span.message-news {
     background-color: #1CF8FE;
     border-radius: 9px 9px 9px 9px;
     box-shadow: 0 0 5px #FFFFFF, 0 0 10px #43FFFF;
@@ -877,4 +877,15 @@ div.search-button:hover .fish-search {
     top: -2px;
     width: 16px;
     text-shadow: none;
+}
+
+.delete_cart_item {
+    background: url("img/delete.png") no-repeat;
+    width:24px;
+    height:27px;
+    display: block;
+}
+
+.delete_cart_item:hover {
+    background-position: 0 -27px;
 }

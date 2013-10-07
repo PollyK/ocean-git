@@ -6,7 +6,7 @@ div.content {
 }
 div.content a, div.navigation a {
     text-decoration: none;
-    color: #46D0D1;
+    color: #fff;
 }
 div.content a:focus, div.content a:hover, div.content a:active {
     color: #fff;
@@ -90,7 +90,6 @@ span.image-caption {
 div.caption {
     padding: 16px 6px;
     position: relative;
-    text-align: center;
 }
 div.image-title {
     font-weight: bold;
@@ -147,6 +146,7 @@ div.pagination a, div.pagination span.current, div.pagination span.ellipsis {
     float: left;
     margin-right: 2px;
     padding: 4px 7px 2px 7px;
+    border: 1px solid #46D0D1;
 }
 div.pagination a:hover {
     color: #fff;
@@ -154,7 +154,7 @@ div.pagination a:hover {
 }
 div.pagination span.current {
     background-color: #15596C;
-    border: medium none;
+    border-color: #15596C;
     color: #46D0D1;
 }
 div.pagination span.ellipsis {

@@ -35,6 +35,7 @@ class Welcome extends CI_Controller {
     public function gallery() {
         $this->assign_left_panel($data);
         $data['no_catalog'] = true;
+        $data['alias'] = 'gallery';
         $this->load->view('gallery', $data);
     }
 
@@ -60,10 +61,45 @@ class Welcome extends CI_Controller {
                 }
             }
         }
+
+        $data['order_name'] = get_cookie('order_name');
+        $data['order_phone'] = get_cookie('order_phone');
+        $data['order_creds'] = get_cookie('order_creds');
+
+
         $data['cart'] = $cart;
         $data['result_price'] = $result_price;
 
         $this->load->view('cart', $data);
+    }
+
+    function delete_cart_item() {
+        $responce = new stdClass();
+
+        $id = (int) $this->input->post('cart_element_id');
+        $orders = $this->session->userdata('orders');
+        $cart_price = 0;
+
+        if ($orders) {
+            foreach ($orders as $key => $record) {
+                $product = $this->product_model->find_product($record["art"]);
+                $cart_item_id = $product[0]->id;
+                if ($cart_item_id == $id) {
+                    
+                } else {
+                    $orders_set[] = $record;
+                    $cart_price += $record['count'] * $product[0]->price;
+                }
+            }
+            //var_dump($orders_set);
+            $this->session->set_userdata('cart_price', $cart_price);
+            $this->session->set_userdata('orders', $orders_set);
+            $responce->total = $cart_price;
+            $responce->delete_id = $id;
+        } else {
+            $responce->delete_id = 0;
+        }
+        echo json_encode($responce);
     }
 
     public function cleare_cart() {
@@ -112,6 +148,32 @@ class Welcome extends CI_Controller {
         $contact['contact_phone'] = $this->input->post('contact_phone');
         $contact['contact_dop'] = $this->input->post('contact_dop');
 
+        $cookie_name = array(
+            'name' => 'order_name',
+            'value' => $contact['contact_name'],
+            'expire' => '8650000',
+            'path' => '/'
+        );
+        
+        $cookie_phone = array(
+            'name' => 'order_phone',
+            'value' => $contact['contact_phone'],
+            'expire' => '8650000',
+            'path' => '/'
+        );
+        
+        $cookie_creds = array(
+            'name' => 'order_creds',
+            'value' => $contact['contact_dop'],
+            'expire' => '8650000',
+            'path' => '/'
+        );
+
+        set_cookie($cookie_name);
+        set_cookie($cookie_phone);
+        set_cookie($cookie_creds);
+
+
         // $this->session->userdata('orders');die;
         if ($this->session->userdata('orders')) {
 
@@ -153,7 +215,7 @@ class Welcome extends CI_Controller {
                     'From: ' . SEND_TO_EMAIL . "\r\n" .
                     'Reply-To: noreply@ocean.ru' . "\r\n";
 
-            mail(SEND_TO_EMAIL, $subject, $message, $headers);
+            //mail(SEND_TO_EMAIL, $subject, $message, $headers);
             mail("378470@gmail.com", $subject, $message, $headers);
             $this->session->unset_userdata('cart_count');
             $this->session->unset_userdata('cart_price');

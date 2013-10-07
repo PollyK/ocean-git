@@ -1,20 +1,16 @@
 <?php $this->load->view('header'); ?>
 <script type="text/javascript">
-
     function tree_toggle(event) {
         event = event || window.event
         var clickedElem = event.target || event.srcElement
-
         if (!hasClass(clickedElem, 'Expand')) {
             return // клик не там
         }
-
         // Node, на который кликнули
         var node = clickedElem.parentNode
         if (hasClass(node, 'ExpandLeaf')) {
             return // клик на листе
         }
-
         // определить новый класс для узла
         var newClass = hasClass(node, 'ExpandOpen') ? 'ExpandClosed' : 'ExpandOpen'
         // заменить текущий класс на newClass
@@ -23,29 +19,19 @@
         node.className = node.className.replace(re, '$1'+newClass+'$3')
     }
 
-
     function hasClass(elem, className) {
         return new RegExp("(^|\\s)"+className+"(\\s|$)").test(elem.className)
     }
 </script>
 
 <section class="content">
-
-
-
     <div id="right-block-big">
         <div class="angle_1"></div>
         <div class="angle_2"></div>
         <div class="angle_3"></div>
         <div class="angle_4"></div>
         <section class="all-right-block text-block">
-
-
-
             <div id="container">
-                <!--<h1>ГАЛЛЕРЕЯ</h1>-->
-
-                <!-- Start Advanced Gallery Html Containers -->
                 <div id="gallery" class="content">
                     <div id="controls" class="controls"></div>
                     <div class="slideshow-container">
@@ -66,7 +52,6 @@
                                 <div class="image-desc">О ещё можно описать товар как чего куда..</div>
                             </div>
                         </li>
-
                         <li>
                             <a class="thumb" name="drop" href="http://farm3.static.flickr.com/2404/2538171134_2f77bc00d9.jpg" title="Title #1">
                                 <img src="http://farm3.static.flickr.com/2404/2538171134_2f77bc00d9_s.jpg" alt="Title #1" />
@@ -76,7 +61,6 @@
                                 <div class="image-desc">О ещё можно описать товар как чего куда..</div>
                             </div>
                         </li>
-
                         <li>
                             <a class="thumb" name="bigleaf" href="http://farm3.static.flickr.com/2093/2538168854_f75e408156.jpg" title="Title #2">
                                 <img src="http://farm3.static.flickr.com/2093/2538168854_f75e408156_s.jpg" alt="Title #2" />
@@ -352,8 +336,8 @@
                         loadingContainerSel:       '#loading',
                         renderSSControls:          true,
                         renderNavControls:         true,
-                        playLinkText:              'Slideshow',
-                        pauseLinkText:             'Остановить Slideshow',
+                        playLinkText:              'Показ Слайдов',
+                        pauseLinkText:             'Остановить Сайдшоу',
                         prevLinkText:              '&#171; Назад ',
                         nextLinkText:              'Вперед &#187;',
                         nextPageLinkText:          'Далее &rsaquo;',
@@ -381,39 +365,4 @@
             <div class="clear-block"></div>
 
         </section>
-
-
-
-
-
-
-    </div>
-    <div class="clear-block"></div>
-</section>
-<footer>
-    <div class="logo-footer">
-        <div class="float">
-            <a href="#" target="_blank" class="logo-footer-1 float"></a>
-            <a href="http://pelikan1997.ru/" target="_blank" class="logo-footer-2 float"></a>
-            <a href="http://www.ocean-omsk.ru/" class="logo-footer-3 float"></a>
-        </div>
-        <p class="float">
-            Иртышская набережная, 12 <br>   
-            Единый заказ блюд: +7 (3812) 37-20-40 <br>  
-            Телефон: +7 (3812) 32-54-00
-        </p>
-    </div>
-    <div class="link-site">
-        <div class="float" style="padding-top: 8px;">Разработка сайта: <a href="http://headway-studio.com/" target="_blank">Headway-studio.ru</a></div>
-        <div class="float-right site"> 
-            <a href="#" class="f"></a>
-            <a href="#" class="t"></a>
-            <a href="http://vk.com/ocean.omsk" target="_blank" class="v"></a>
-        </div>
-    </div>
-
-</footer>
-</section>
-</body>
-</html>
-
+    <?php $this->load->view('footer'); ?>

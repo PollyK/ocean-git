@@ -26,7 +26,7 @@
         <link rel="stylesheet" href="<?php echo base_url(); ?>stuff/css/galleriffic-2.css" type="text/css">
         <link rel="stylesheet" href="<?php echo base_url(); ?>stuff/css/basic.css" type="text/css">
 <!--            <style type="text/css">
-            @import "<?php //echo base_url();                    ?>stuff/css/tree.css";
+            @import "<?php //echo base_url();                          ?>stuff/css/tree.css";
         </style>-->
         <style type="text/css">
             .dataTables_filter, .dataTables_info{
@@ -38,8 +38,8 @@
         <script type="text/javascript" src="<?php echo base_url(); ?>stuff/js/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
 
         <script type="text/javascript" src="<?php echo base_url(); ?>stuff/js/jquery.placeholder.min.js"></script>
-         <script type="text/javascript" src="<?php echo base_url(); ?>stuff/js/jquery.galleriffic.js"></script>
-          <script type="text/javascript" src="<?php echo base_url(); ?>stuff/js/jquery.opacityrollover.js"></script>
+        <script type="text/javascript" src="<?php echo base_url(); ?>stuff/js/jquery.galleriffic.js"></script>
+        <script type="text/javascript" src="<?php echo base_url(); ?>stuff/js/jquery.opacityrollover.js"></script>
 
         <!-- Optionally add helpers - button, thumbnail and/or media -->
         <link rel="stylesheet" href="<?php echo base_url(); ?>stuff/js/fancybox/source/helpers/jquery.fancybox-buttons.css?v=1.0.5" type="text/css" media="screen" />
@@ -48,6 +48,45 @@
 
         <link rel="stylesheet" href="<?php echo base_url(); ?>stuff/js/fancybox/source/helpers/jquery.fancybox-thumbs.css?v=1.0.7" type="text/css" media="screen" />
         <script type="text/javascript" src="<?php echo base_url(); ?>stuff/js/fancybox/source/helpers/jquery.fancybox-thumbs.js?v=1.0.7"></script>
+
+        <style>
+            #nav ul{
+                list-style:none;
+                position:absolute;
+                left:-9999px; 
+                opacity:0; 
+                -webkit-transition:0.25s linear opacity; 
+            }
+            #nav ul li{
+                padding-top:1px;
+                float:none;
+
+            }
+            #nav ul a{
+                white-space:nowrap; 
+                display:block;
+            }
+            #nav li:hover ul{ 
+                left:0; 
+                opacity:1;
+            }
+            #nav li:hover a{ 
+                background:#6b0c36;
+                background:rgba(107,12,54,0.75); 
+                text-decoration:underline;
+            }
+            #nav li:hover ul a{ 
+                text-decoration:none;
+                -webkit-transition:-webkit-transform 0.075s linear;
+            }
+            #nav li:hover ul li a:hover{ 
+                background:#333;
+                background:rgba(51,51,51,0.75); 
+                text-decoration:underline;
+                -moz-transform:scale(1.05);
+                -webkit-transform:scale(1.05);
+            }
+        </style>
 
     </head>
     <body>
@@ -62,10 +101,9 @@
                 var clickedElem = event.target || event.srcElement
 
                 if (!hasClass(clickedElem, 'Expand') && !hasClass(clickedElem, 'Content') ) {
-                    return // клик не там
+                    return 
                 }
 
-                // Node, на который кликнули
                 var node = clickedElem.parentNode
                 if (hasClass(node, 'ExpandLeaf')) {
                     return // клик на листе
@@ -242,22 +280,35 @@
 
         <section id="all-content">
             <ul id="nav">
-                <li <?php if (!isset($alias)) { ?> class="active" <?php } ?>><a href="<?php echo SITE_URL; ?>welcome/news">
+                <li <?php if (!isset($alias)) { ?> class="active" <?php } ?>>
+                    <a href="<?php echo SITE_URL; ?>welcome/news">
                         Новости
-                        <a href="#" class="message-news">1</a>
-                    </a></li>
+                        <span class="message-news">1</span>
+                    </a>
+                </li>
 
-                <?php foreach ($main_menu as $one_point) { ?>
-                    <li <?php if (isset($alias) && $alias == $one_point->alias) { ?> class="active" <?php } ?>><a href="<?php echo SITE_URL; ?>welcome/page/<?php echo $one_point->alias ?>"><?php echo $one_point->title; ?></a></li>
-                <?php } ?>
-<!--                    <li class=""><a href="<?php //echo SITE_URL;           ?>welcome/about">О нас</a></li>
-<li class=""><a href="<?php //echo SITE_URL;           ?>welcome/production">Собственное производство</a></li>
-<li class=""><a href="<?php //echo SITE_URL;           ?>welcome/discount">Дисконтная программа</a></li>
-<li class=""><a href="<?php //echo SITE_URL;           ?>welcome/delivery">Доставка</a></li>-->
+
+                <li <?php if (isset($alias) && in_array($alias, array('about', 'discount', 'gallery', 'faq'))) { ?> class="active" <?php } ?>>
+                    <a href="<?php echo SITE_URL; ?>welcome/page/about">Для покупателя</a>
+                    <ul>
+                        <li><a href="<?php echo SITE_URL; ?>welcome/page/about">О нас</a></li>
+                        <li><a href="<?php echo SITE_URL; ?>welcome/page/discount">Дисконтная программа</a></li>
+                        <li><a href="<?php echo SITE_URL; ?>welcome/gallery">Галерея</a></li>
+                        <li><a href="<?php echo SITE_URL; ?>welcome/faq">Обратная связь</a></li>
+                    </ul>
+                </li>
+                <li><a href="<?php echo SITE_URL; ?>welcome/page/production">Собственное производство</a></li>
+
+                <li><a href="<?php echo SITE_URL; ?>welcome/page/delivery">Доставка</a></li>
                 <li><a href="<?php echo SITE_URL; ?>"><div class="icon-home"></div></a></li>
             </ul>
             <header>
-                <a href="<?php echo SITE_URL; ?>"><div class="logo"></div></a>
+
+                <?php if (isset($no_catalog) && $no_catalog) { ?>
+                    <a href="<?php echo SITE_URL; ?>welcome/catalog"><div class="logo"></div></a>
+                <?php } else { ?>
+                    <a href="<?php echo SITE_URL; ?>"><div class="logo"></div></a>
+                <?php } ?>
                 <div>
                     <a href="<?php echo SITE_URL; ?>welcome/cart">
                         <div id="basket">
@@ -282,23 +333,28 @@
                         </div>
                     </a>    
                     <div class="search-faq">
-                        <input id="search" type="text" name="search">
-                        <div class="search-button" onclick="global_search()">
-                            <div class="fish-search"></div>
-                        </div>
-                        <a class="faq" href="<?php echo SITE_URL; ?>welcome/faq">
-                        </a>
-
+                        <?php
+                        if (isset($no_catalog) && $no_catalog) {
+                            
+                        } else {
+                            ?>
+                            <input id="search" type="text" name="search">
+                            <div class="search-button" onclick="global_search()">
+                                <div class="fish-search"></div>
+                            </div>
+                            <a class="faq" href="<?php echo SITE_URL; ?>welcome/faq">
+                            </a>
+                        <?php } ?>
                     </div>
                 </div>
             </header>
-          
-                <?php
-                if (isset($no_catalog) && $no_catalog) {
-                    
-                } else {
-                    ?>
-              <section class="content">
+
+            <?php
+            if (isset($no_catalog) && $no_catalog) {
+                
+            } else {
+                ?>
+                <section class="content">
                     <aside class="float">
                         <div class="lathing"></div>
                         <a href="<?php echo SITE_URL; ?>welcome/catalog">
@@ -310,60 +366,60 @@
 
                             <ul class="Container level_1">
                                 <?php if ($catalog) { ?>
-        <?php foreach ($catalog as $item_0) { ?>
+                                    <?php foreach ($catalog as $item_0) { ?>
                                         <li class="Node ExpandClosed ">
                                             <div class="<?php echo!($item_0['content']) ? "IsLastmy" : "Expand"; ?>"></div>
                                             <div class="Content"><?php echo $item_0['name']; ?></div>
 
-                                                <?php if ($item_0['content']) { ?>
+                                            <?php if ($item_0['content']) { ?>
                                                 <ul class="Container level_2">
                                                     <?php foreach ($item_0['content'] as $item_1) { ?>
 
-                                                            <?php if (!($item_1['content'])) { ?>    
+                                                        <?php if (!($item_1['content'])) { ?>    
                                                             <li class="Node IsLast">
                                                             <?php } else { ?>
                                                             <li class="Node ExpandClosed">    
-                    <? } ?>        
+                                                            <? } ?>        
                                                             <div class="<?php echo!($item_1['content']) ? "IsLastmy" : "Expand"; ?>"></div>
                                                             <div class="Content" >
                                                                 <?php if ($item_1['content']) { ?>
                                                                     <?php echo $item_1['name']; ?>
-                                                                    <?php } else { ?>
+                                                                <?php } else { ?>
                                                                     <a onclick="load_products('<?php echo $item_1['group_id']; ?>')">
-                                                                    <?php echo $item_1['name']; ?>
+                                                                        <?php echo $item_1['name']; ?>
                                                                     </a>
-                                                            <?php } ?>
+                                                                <?php } ?>
                                                             </div>
-                                                                <?php if ($item_1['content']) { ?>
+                                                            <?php if ($item_1['content']) { ?>
                                                                 <ul class="Container level_3">
-                        <?php foreach ($item_1['content'] as $item_2) { ?>
+                                                                    <?php foreach ($item_1['content'] as $item_2) { ?>
                                                                         <li class="Node ExpandLeaf IsLast">
                                                                             <div class="<?php echo!($item_2['content']) ? "IsLastmy" : "Expand"; ?>"></div>
                                                                             <div class="Content">
                                                                                 <a onclick="load_products('<?php echo $item_2['group_id']; ?>')">
-                            <?php echo $item_2['name']; ?>
+                                                                                    <?php echo $item_2['name']; ?>
                                                                                 </a>
                                                                             </div>
-                                                                                <?php if ($item_2['content']) { ?>
+                                                                            <?php if ($item_2['content']) { ?>
                                                                                 <ul class="Container level_4">
-                                <?php foreach ($item_2['content'] as $item_3) { ?>
+                                                                                    <?php foreach ($item_2['content'] as $item_3) { ?>
                                                                                         <li class="Node ExpandLeaf IsLast">
                                                                                             <div class="<?php echo!($item_3['content']) ? "IsLastmy" : "Expand"; ?>"></div>
                                                                                             <div class="Content">
                                                                                                 <a onclick="load_products('<?php echo $item_3['group_id']; ?>')">
-                                    <?php echo $item_3['name']; ?>
+                                                                                                    <?php echo $item_3['name']; ?>
                                                                                                 </a>
                                                                                             </div>
                                                                                         </li>
-                                                                                <?php } ?>
+                                                                                    <?php } ?>
                                                                                 </ul>
-                                                                        <?php } ?>
+                                                                            <?php } ?>
                                                                         </li>
-                                                                <?php } ?>
+                                                                    <?php } ?>
                                                                 </ul>
-                                                        <?php } ?>
+                                                            <?php } ?>
                                                         </li>
-                                                <?php } ?>
+                                                    <?php } ?>
                                                 </ul>
                                             <?php } ?>
 
@@ -393,14 +449,13 @@
                         </div>
 
                     </aside>
-                 <div id="right-block" >
-                    <div class="angle_1"></div>
-                    <div class="angle_2"></div>
-                    <div class="angle_3"></div>
-                    <div class="angle_4"></div>
+                    <div id="right-block" >
+                        <div class="angle_1"></div>
+                        <div class="angle_2"></div>
+                        <div class="angle_3"></div>
+                        <div class="angle_4"></div>
 
 
                     <?php }
-                ?>
+                    ?>
 
-               
