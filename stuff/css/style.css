@@ -889,3 +889,22 @@ div.search-button:hover .fish-search {
 .delete_cart_item:hover {
     background-position: 0 -27px;
 }
+
+.registr-block a {
+    text-align: right;
+    color: #46D0D1;
+    font-family: "eurostyle","eurostyle-ie";
+    font-size: 16px;
+    letter-spacing: 0.1em;
+    text-shadow: -1px -1px 1px #075A71;
+    padding-top: 6px;
+}
+
+.registr-block a:hover {
+    color: #cafdfe;
+    text-shadow: 0 0 10px #6cb3c7;
+}
+
+.registr-block {
+    margin-right: 162px;
+}

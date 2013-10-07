@@ -279,6 +279,9 @@
         </script>
 
         <section id="all-content">
+            <div class="registr-block">
+                <a class="float-right" href="#" style="margin-left:2px;"> Регистрация</a> <a class="float-right" href="#">Вход / </a>
+            </div>
             <ul id="nav">
                 <li <?php if (!isset($alias)) { ?> class="active" <?php } ?>>
                     <a href="<?php echo SITE_URL; ?>welcome/news">
