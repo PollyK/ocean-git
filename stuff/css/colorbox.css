@@ -50,3 +50,7 @@
         #cboxLoadedContent #inline_content img {
             border: 1px solid #fff;
         }
+        
+        #nav li:hover ul {
+            background: url("../img/back-block.png") repeat scroll 0 0 rgba(0, 0, 0, 0)
+        }

@@ -69,20 +69,14 @@
             #nav li:hover ul{ 
                 left:0; 
                 opacity:1;
+                padding: 10px 0 10px 10px;
             }
-            #nav li:hover a{ 
-                background:#6b0c36;
-                background:rgba(107,12,54,0.75); 
-                text-decoration:underline;
-            }
+            
             #nav li:hover ul a{ 
                 text-decoration:none;
                 -webkit-transition:-webkit-transform 0.075s linear;
             }
             #nav li:hover ul li a:hover{ 
-                background:#333;
-                background:rgba(51,51,51,0.75); 
-                text-decoration:underline;
                 -moz-transform:scale(1.05);
                 -webkit-transform:scale(1.05);
             }
