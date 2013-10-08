@@ -26,7 +26,7 @@
         <link rel="stylesheet" href="<?php echo base_url(); ?>stuff/css/galleriffic-2.css" type="text/css">
         <link rel="stylesheet" href="<?php echo base_url(); ?>stuff/css/basic.css" type="text/css">
 <!--            <style type="text/css">
-            @import "<?php //echo base_url();                          ?>stuff/css/tree.css";
+            @import "<?php //echo base_url();                             ?>stuff/css/tree.css";
         </style>-->
         <style type="text/css">
             .dataTables_filter, .dataTables_info{
@@ -48,6 +48,9 @@
 
         <link rel="stylesheet" href="<?php echo base_url(); ?>stuff/js/fancybox/source/helpers/jquery.fancybox-thumbs.css?v=1.0.7" type="text/css" media="screen" />
         <script type="text/javascript" src="<?php echo base_url(); ?>stuff/js/fancybox/source/helpers/jquery.fancybox-thumbs.js?v=1.0.7"></script>
+
+        <link rel="stylesheet" href="<?php echo base_url(); ?>stuff/css/colorbox.css" type="text/css">
+        <script type="text/javascript" src="<?php echo base_url(); ?>stuff/js/jquery.colorbox.js"></script>
 
         <style>
             #nav ul{
@@ -71,7 +74,7 @@
                 opacity:1;
                 padding: 10px 0 10px 10px;
             }
-            
+
             #nav li:hover ul a{ 
                 text-decoration:none;
                 -webkit-transition:-webkit-transform 0.075s linear;
@@ -272,15 +275,72 @@
     
         </script>
 
+        <script type="text/javascript">
+            $(document).ready(function(){
+                $("#form-registr-url").colorbox({inline:true, width:"50%"});
+                $("#form-login-url").colorbox({inline:true, width:"50%"});
+            });
+        </script>
+
+
+        <?php if (isset($flash_banner) && $flash_banner) { ?>
+            <script type="text/javascript">
+                $(document).ready(function(){
+                    $(".inline").colorbox({inline:true, width:"50%"});
+                    $.colorbox({inline:true, href:"#inline_content", width:"50%"});
+                    
+                    $('#cboxClose').click(function(){
+                        $.post(
+                        "<?php echo SITE_URL; ?>welcome/disable_flash_banner", 
+                        {banner_id : <?php echo $flash_banner->id; ?>},
+                        function(data){
+                                
+                        },"json");
+                    });
+                });
+            </script>
+
+            <a class='inline' href="#inline_content"></a>
+            <div style='display:none'>
+                <div id='inline_content' style='padding:10px; background:#fff;'>
+                    <a href="<?php echo SITE_URL; ?>welcome/show_news/<?php echo $flash_banner->banner_link_to_article; ?>" title="<?php echo $flash_banner->banner_header; ?>">
+                        <img src="<?php echo base_url() . "stuff/news_images/" . $flash_banner->banner_photo; ?>">
+                    </a>
+                </div>
+            </div>
+        <?php } ?>
+
         <section id="all-content">
+
+            <!--Form registr-login-->
+
+            <div style='display:none'>
+                <div id='form-registr' style='padding:10px; '>
+                    <div class="row">Ваш e-mail:</div>
+                    <input type="text">
+                    <div class="row">Пароль отправим вам на почту</div>
+                    <div><button class="submit">Отправить</button></div>
+                </div>
+                <div id='form-login' style='padding:10px; '>
+                    <div class="row">Ваш e-mail:</div>
+                    <input type="text">
+                    <div class="row">Ваш пароль:</div>
+                    <input type="password">
+                    <div><button class="submit">Войти</button></div>
+                    
+                </div>
+            </div>
+            <!--Form registr-login END-->
+
             <div class="registr-block">
-                <a class="float-right" href="#" style="margin-left:2px;"> Регистрация</a> <a class="float-right" href="#">Вход / </a>
+                <a id="form-registr-url" class="float-right" href="#form-registr" style="margin-left:2px;"> Регистрация</a> 
+                <a id="form-login-url" class="float-right" href="#form-login">Вход / </a>
             </div>
             <ul id="nav">
                 <li <?php if (!isset($alias)) { ?> class="active" <?php } ?>>
                     <a href="<?php echo SITE_URL; ?>welcome/news">
                         Новости
-                        <span <?php if($this->session->userdata('news_unread')){ ?>  class="message-news" ><?php echo $this->session->userdata('news_unread');?></span> <?php } ?>
+                        <span <?php if ($this->session->userdata('news_unread')) { ?>  class="message-news" ><?php echo $this->session->userdata('news_unread'); ?></span> <?php } ?>
                     </a>
                 </li>
 
