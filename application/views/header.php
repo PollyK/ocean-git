@@ -26,7 +26,7 @@
         <link rel="stylesheet" href="<?php echo base_url(); ?>stuff/css/galleriffic-2.css" type="text/css">
         <link rel="stylesheet" href="<?php echo base_url(); ?>stuff/css/basic.css" type="text/css">
 <!--            <style type="text/css">
-            @import "<?php //echo base_url();                             ?>stuff/css/tree.css";
+            @import "<?php //echo base_url();                               ?>stuff/css/tree.css";
         </style>-->
         <style type="text/css">
             .dataTables_filter, .dataTables_info{
@@ -288,13 +288,13 @@
                 $(document).ready(function(){
                     $(".inline").colorbox({inline:true, width:"50%"});
                     $.colorbox({inline:true, href:"#inline_content", width:"50%"});
-                    
+                            
                     $('#cboxClose').click(function(){
                         $.post(
                         "<?php echo SITE_URL; ?>welcome/disable_flash_banner", 
                         {banner_id : <?php echo $flash_banner->id; ?>},
                         function(data){
-                                
+                                        
                         },"json");
                     });
                 });
@@ -327,15 +327,26 @@
                     <div class="row">Ваш пароль:</div>
                     <input type="password">
                     <div><button class="submit">Войти</button></div>
-                    
+
                 </div>
             </div>
             <!--Form registr-login END-->
 
-            <div class="registr-block">
+            
+
+            <!--            <div class="registr-block">
                 <a id="form-registr-url" class="float-right" href="#form-registr" style="margin-left:2px;"> Регистрация</a> 
                 <a id="form-login-url" class="float-right" href="#form-login">Вход / </a>
+            </div>-->
+
+            <div class="registr-block">
+                <a class="float" href="#">Мои заказы / </a>
+                <a class="float" href="#" style="margin-left:2px;"> Профиль</a>
+                <a id="form-login-url" class="float-right" href="#form-login">Выход</a>
             </div>
+
+
+
             <ul id="nav">
                 <li <?php if (!isset($alias)) { ?> class="active" <?php } ?>>
                     <a href="<?php echo SITE_URL; ?>welcome/news">
