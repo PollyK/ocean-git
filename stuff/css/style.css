@@ -866,7 +866,7 @@ div.search-button:hover .fish-search {
     background-color: #1CF8FE;
     border-radius: 9px 9px 9px 9px;
     box-shadow: 0 0 5px #FFFFFF, 0 0 10px #43FFFF;
-    color: #15596C;
+    color: red;
     font-size: 14px;
     font-weight: bold;
     height: 16px;
@@ -876,7 +876,7 @@ div.search-button:hover .fish-search {
     text-align: center;
     top: -2px;
     width: 16px;
-    text-shadow: none;
+    text-shadow: 0 0 2px #FFFFFF, 0 0 6px #FFFFFF;
 }
 
 .delete_cart_item {
@@ -910,20 +910,11 @@ div.search-button:hover .fish-search {
     padding-left: 160px;
 }
 
-#form-registr, #form-login, #block-message {
+#form-registr, #form-login {
     color: #FFFFFF;
     text-align: center;
     background-color: #0d7d93;
     height: 200px;
-    font: 18px "eurostyle","eurostyle-ie";
-    letter-spacing: 0.08em;
-    padding: 10px 0 41px !important;
-}
-
-#inline_content2 {
-    color: #FFFFFF;
-    text-align: center;
-    background-color: #0d7d93;
     font: 18px "eurostyle","eurostyle-ie";
     letter-spacing: 0.08em;
     padding: 10px 0 41px !important;
