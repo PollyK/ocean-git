@@ -909,11 +909,20 @@ div.search-button:hover .fish-search {
     margin-right: 162px;
 }
 
-#form-registr, #form-login {
+#form-registr, #form-login, #block-message {
     color: #FFFFFF;
     text-align: center;
     background-color: #0d7d93;
     height: 200px;
+    font: 18px "eurostyle","eurostyle-ie";
+    letter-spacing: 0.08em;
+    padding: 10px 0 41px !important;
+}
+
+#inline_content2 {
+    color: #FFFFFF;
+    text-align: center;
+    background-color: #0d7d93;
     font: 18px "eurostyle","eurostyle-ie";
     letter-spacing: 0.08em;
     padding: 10px 0 41px !important;
