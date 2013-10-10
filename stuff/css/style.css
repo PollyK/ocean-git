@@ -907,6 +907,7 @@ div.search-button:hover .fish-search {
 
 .registr-block {
     margin-right: 162px;
+    padding-left: 160px;
 }
 
 #form-registr, #form-login, #block-message {

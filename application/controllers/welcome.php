@@ -54,8 +54,8 @@ class Welcome extends CI_Controller {
     public function catalog() {
         $flash_screen = $this->banners_model->get_flash_banner();
         if ($flash_screen) {
-            if(get_cookie('closed_flash_banner_id') !=  $flash_screen->id){
-                    $data['flash_banner'] = $flash_screen;
+            if (get_cookie('closed_flash_banner_id') != $flash_screen->id) {
+                $data['flash_banner'] = $flash_screen;
             }
         }
         $this->assign_left_panel($data);
@@ -103,10 +103,18 @@ class Welcome extends CI_Controller {
             }
         }
 
-        $data['order_name'] = get_cookie('order_name');
-        $data['order_phone'] = get_cookie('order_phone');
-        $data['order_creds'] = get_cookie('order_creds');
-
+        if ($user_id = $this->session->userdata('user_id')) {
+            $user_data = $this->user_model->get_user_by_id($user_id);
+            if ($user_data) {
+                $data['order_name'] = $user_data->fio;
+                $data['order_phone'] = $user_data->phone;
+                $data['order_creds'] = get_cookie('order_creds');
+            }
+        } else {
+            $data['order_name'] = get_cookie('order_name');
+            $data['order_phone'] = get_cookie('order_phone');
+            $data['order_creds'] = get_cookie('order_creds');
+        }
 
         $data['cart'] = $cart;
         $data['result_price'] = $result_price;
@@ -217,16 +225,19 @@ class Welcome extends CI_Controller {
 
         // $this->session->userdata('orders');die;
         if ($this->session->userdata('orders')) {
-
+            $user_id = $this->session->userdata('user_id');
             $orders_data = array(
                 'date' => date("Y-m-d h:i:s"),
                 'contact_name' => $contact['contact_name'],
                 'contact_phone' => $contact['contact_phone'],
                 'contact_dopinfo' => $contact['contact_dop'],
-                'ip' => $_SERVER["REMOTE_ADDR"]
+                'ip' => $_SERVER["REMOTE_ADDR"],
+                'user_id'=>($user_id)?$user_id:"0"
             );
 
             $order_id = $this->orders_model->insert($orders_data);
+            
+            
             for ($i = 0; $i < count($cart['id']); $i++) {
                 $headling_data = array(
                     'good_id' => $cart['id'][$i],

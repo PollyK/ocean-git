@@ -26,7 +26,7 @@
         <link rel="stylesheet" href="<?php echo base_url(); ?>stuff/css/galleriffic-2.css" type="text/css">
         <link rel="stylesheet" href="<?php echo base_url(); ?>stuff/css/basic.css" type="text/css">
 <!--            <style type="text/css">
-            @import "<?php //echo base_url();                                    ?>stuff/css/tree.css";
+            @import "<?php //echo base_url();                                     ?>stuff/css/tree.css";
         </style>-->
         <style type="text/css">
             .dataTables_filter, .dataTables_info{
@@ -316,13 +316,13 @@
                 $(document).ready(function(){
                     $(".inline").colorbox({inline:true, width:"50%"});
                     $.colorbox({inline:true, href:"#inline_content", width:"50%"});
-                                                
+                                                    
                     $('#cboxClose').click(function(){
                         $.post(
                         "<?php echo SITE_URL; ?>welcome/disable_flash_banner", 
                         {banner_id : <?php echo $flash_banner->id; ?>},
                         function(data){
-                                                            
+                                                                
                         },"json");
                     });
                 });
@@ -365,15 +365,17 @@
                 </div>
                 <!--Form registr-login END-->
             </div>
-            <?php if($this->session->userdata('user_id')){ ?>
-            <div class="registr-block">
-                <a id="form-login-url" class="float-right" href="#form-login">Выход</a>
-            </div>
-            <?php }else{ ?>
-            <div class="registr-block">
-                <a id="form-registr-url" class="float-right" href="#form-registr" style="margin-left:2px;"> Регистрация</a> 
-                <a id="form-login-url" class="float-right" href="#form-login">Вход / </a>
-            </div>
+            <?php if ($this->session->userdata('user_id')) { ?>
+                <div class="registr-block">
+                    <a href="<?php echo SITE_URL; ?>user/orders" class="float">Мои заказы / </a>
+                    <a style="margin-left:2px;" href="<?php echo SITE_URL; ?>user/profile" class="float"> Профиль</a>
+                    <a href="<?php echo SITE_URL; ?>user/logout" class="float-right cboxElement" id="form-login-url">Выход</a>
+                </div>
+            <?php } else { ?>
+                <div class="registr-block">
+                    <a id="form-registr-url" class="float-right" href="#form-registr" style="margin-left:2px;"> Регистрация</a> 
+                    <a id="form-login-url" class="float-right" href="#form-login">Вход / </a>
+                </div>
             <?php } ?>
             <ul id="nav">
                 <li <?php if (!isset($alias)) { ?> class="active" <?php } ?>>

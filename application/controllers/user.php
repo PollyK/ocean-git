@@ -46,21 +46,53 @@ class User extends CI_Controller {
         }
         return $password;
     }
-    
-    public function login(){
+
+    public function login() {
         $email = $this->input->post('email');
         $password = $this->input->post('password');
-        
+
         $user = $this->user_model->auth_user($email, $password);
-        if($user){
+        if ($user) {
             $this->session->set_userdata('user_id', $user->id);
-            
-        }else{
+        } else {
             $this->session->set_flashdata('message', 'Неверные данные для входа');
         }
-        redirect(SITE_URL."welcome/catalog");
+        redirect(SITE_URL . "welcome/catalog");
+    }
+
+    public function logout() {
+        $this->session->unset_userdata('user_id');
+        redirect(SITE_URL . "welcome/catalog");
+    }
+
+    public function update_profile(){
+        $user_id = $this->session->userdata('user_id');
+        $update['fio'] = $this->input->post('fio');
+        $update['phone'] = $this->input->post('phone');
+        if($new_password = $this->input->post('new_password')){
+            $update['password'] = md5($new_password);
+        }
+        $this->user_model->update_record($user_id, $update);
+        $this->session->set_flashdata('message', 'Профиль обновлен');
+        redirect(SITE_URL . "user/profile");
     }
     
+    public function profile() {
+        $this->assign_left_panel($data);
+        $user_data = false;
+        if ($user_id = $this->session->userdata('user_id')) {
+            $user_data = $this->user_model->get_user_by_id($user_id);
+            if ($user_data) {
+                $data['user'] = $user_data;
+            }
+        }
+        if ($user_data) {
+            $this->load->view('user/profile', $data);
+        } else {
+            redirect(SITE_URL . "welcome/catalog");
+        }
+    }
+
     public function resend() {
         $key = $this->input->post('key');
         $email = $this->decrypt_text($key);
@@ -83,7 +115,7 @@ class User extends CI_Controller {
         } else {
             $this->session->set_flashdata('message', 'e-mail не найден. Попробуйте его зарегистрировать');
         }
-        redirect(SITE_URL . "welcome/catalog"); 
+        redirect(SITE_URL . "welcome/catalog");
     }
 
     private function assign_left_panel(&$data) {
@@ -99,16 +131,16 @@ class User extends CI_Controller {
     public function do_reset() {
         $code = $this->input->post('code');
         $new_password = $this->input->post('new_password');
-        
+
         $user = $this->user_model->get_user_by_code($code);
         if ($user) {
             $update['password'] = md5($new_password);
             $this->user_model->update_record($user->id, $update);
             $this->session->set_flashdata('message', 'Пароль сохранен. Вы можете войти в панель сайта');
-        }else{
+        } else {
             $this->session->set_flashdata('message', 'Пользователь не найден. Обратитесь к администратору сайта');
         }
-        redirect(SITE_URL . "welcome/catalog"); 
+        redirect(SITE_URL . "welcome/catalog");
     }
 
     public function reset($code) {
@@ -119,7 +151,7 @@ class User extends CI_Controller {
             $this->load->view('user/reset_password', $data);
         } else {
             $this->session->set_flashdata('message', 'Неверный формат адреса. Обратитесь к администратору сайта');
-            redirect(SITE_URL . "welcome/catalog"); 
+            redirect(SITE_URL . "welcome/catalog");
         }
     }
 
