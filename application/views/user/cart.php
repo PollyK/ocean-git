@@ -41,7 +41,7 @@
                             <input type="hidden" name="product_name[]" value="<?php echo $value['product_name']; ?>">
                         </td>
                         <td>
-                            <a class="delete_cart_item" onclick="delete_cart_item(this)" id="<?php echo $value['id']; ?>"></a>
+                            
                         </td>
 
                     </tr>
