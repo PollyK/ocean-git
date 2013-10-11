@@ -1,40 +1,7 @@
 <?php $this->load->view('header'); ?>
-<script type="text/javascript">
-    $(document).ready(function(){
-        $('.button-order').live('click',function(){
-            var name = $('input[name="contact_name"]').val();
-            var phone = $('input[name="contact_phone"]').val();
-            var dop = $('textarea[name="contact_dop"]').text();
-            if(!name){
-                alert("Введите ФИО");
-                return false;
-            }
-            if(!phone){
-                alert("Введите телефон или email");
-                return false;
-            }
-            //        if(!dop){
-            //            alert("Введите дополнительные данные");
-            //            return false;
-            //        }
-        
-            return true;
-        });
-    
-    });
-    
-    
-    function delete_cart_item(el){
-        if(confirm('Удалить товар?')){
-            var cart_element_id = $(el).attr('id');
-            location.href= "<?php echo SITE_URL; ?>welcome/delete_cart_item/"+cart_element_id;
-        }
-    }
-    
-    
-</script>
+
 <?php if ($cart) { ?>
-    <form action="<?php echo SITE_URL; ?>welcome/create_order" method="post">
+    <form action="<?php echo SITE_URL; ?>user/load_order" method="post">
         <table class="table-catalog basket">
             <thead>
                 <tr>
@@ -89,14 +56,7 @@
             </tfoot>
         </table>    
         <section class="all-right-block delivery-block">
-            <input name="contact_name" class="input" type="text" placeholder="Контактное лицо (ФИО):" value="<?php echo $order_name;?>">
-            <input  name="contact_phone" class="input" type="text" placeholder="Телефон(email) для связи:" value="<?php echo $order_phone;?>">
-            <textarea name="contact_dop" class="textarea" placeholder="Дополнительная информация: "><?php echo $order_creds;?></textarea>    
-
-            <input class="button-order float" type="submit" value="">
-
-
-            <a class="float" style="margin-left: 14px; margin-top: 24px;"href="<?php echo SITE_URL; ?>welcome/cleare_cart">Очистить корзину</a>
+            <a class="float" style="margin-left: 14px; margin-top: 24px;"href="<?php echo SITE_URL; ?>user/load_order">Продолжить оформление заказа</a>
         </section>
     </form>
 <?php } else { ?>

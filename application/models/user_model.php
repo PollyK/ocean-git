@@ -21,8 +21,6 @@ class user_model extends CI_Model {
         $this->db->update('user');
     }
 
-    
-    
     public function auth_user($email, $password){
         $this->db->where('email', $email);
         $this->db->where('password', md5($password));
@@ -43,16 +41,6 @@ class user_model extends CI_Model {
         return false;
     }
     
-    public function get_user_by_id($id) {
-        $this->db->where('id', $id);
-        $res = $this->db->get('user');
-        if ($res->num_rows()) {
-            $result = $res->row();
-            return $result;
-        }
-        return false;
-    }
-    
     public function get_user_by_code($code){
         $this->db->where('secret_key', $code);
         $res = $this->db->get('user');
@@ -63,4 +51,14 @@ class user_model extends CI_Model {
         return false;
     }
 
+    public function get_user_by_id($id) {
+        $this->db->where('id', $id);
+        $res = $this->db->get('user');
+        if ($res->num_rows()) {
+            $result = $res->row();
+            return $result;
+        }
+        return false;
+    }
+    
 }

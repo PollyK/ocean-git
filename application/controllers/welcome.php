@@ -54,8 +54,8 @@ class Welcome extends CI_Controller {
     public function catalog() {
         $flash_screen = $this->banners_model->get_flash_banner();
         if ($flash_screen) {
-            if (get_cookie('closed_flash_banner_id') != $flash_screen->id) {
-                $data['flash_banner'] = $flash_screen;
+            if(get_cookie('closed_flash_banner_id') !=  $flash_screen->id){
+                    $data['flash_banner'] = $flash_screen;
             }
         }
         $this->assign_left_panel($data);
@@ -103,7 +103,7 @@ class Welcome extends CI_Controller {
             }
         }
 
-        if ($user_id = $this->session->userdata('user_id')) {
+       if ($user_id = $this->session->userdata('user_id')) {
             $user_data = $this->user_model->get_user_by_id($user_id);
             if ($user_data) {
                 $data['order_name'] = $user_data->fio;
@@ -116,16 +116,16 @@ class Welcome extends CI_Controller {
             $data['order_creds'] = get_cookie('order_creds');
         }
 
+
         $data['cart'] = $cart;
         $data['result_price'] = $result_price;
 
         $this->load->view('cart', $data);
     }
 
-    function delete_cart_item() {
+    function delete_cart_item($id) {
         $responce = new stdClass();
 
-        $id = (int) $this->input->post('cart_element_id');
         $orders = $this->session->userdata('orders');
         $cart_price = 0;
 
@@ -141,6 +141,7 @@ class Welcome extends CI_Controller {
                 }
             }
             //var_dump($orders_set);
+            $this->session->set_userdata('cart_count', count($orders_set));
             $this->session->set_userdata('cart_price', $cart_price);
             $this->session->set_userdata('orders', $orders_set);
             $responce->total = $cart_price;
@@ -148,7 +149,8 @@ class Welcome extends CI_Controller {
         } else {
             $responce->delete_id = 0;
         }
-        echo json_encode($responce);
+        //echo json_encode($responce);
+        redirect(SITE_URL."welcome/cart");
     }
 
     public function cleare_cart() {
@@ -236,8 +238,6 @@ class Welcome extends CI_Controller {
             );
 
             $order_id = $this->orders_model->insert($orders_data);
-            
-            
             for ($i = 0; $i < count($cart['id']); $i++) {
                 $headling_data = array(
                     'good_id' => $cart['id'][$i],

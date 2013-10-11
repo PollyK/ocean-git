@@ -55,42 +55,20 @@ class User extends CI_Controller {
         if ($user) {
             $this->session->set_userdata('user_id', $user->id);
         } else {
-            $this->session->set_flashdata('message', 'Неверные данные для входа');
-        }
-        redirect(SITE_URL . "welcome/catalog");
-    }
+            $email_exists = $this->user_model->get_user_by_email($email);
+            if ($email_exists) {
+                $email_key = $this->crypt_text($email);
+                $this->session->set_flashdata('message', 'Неверный пароль . 
+                <form action="' . SITE_URL . 'user/resend/" method="post" id="resend_password_form">
+                    <input type="hidden" name="key" value="' . $email_key . '">
+                 </form>
 
-    public function logout() {
-        $this->session->unset_userdata('user_id');
-        redirect(SITE_URL . "welcome/catalog");
-    }
-
-    public function update_profile(){
-        $user_id = $this->session->userdata('user_id');
-        $update['fio'] = $this->input->post('fio');
-        $update['phone'] = $this->input->post('phone');
-        if($new_password = $this->input->post('new_password')){
-            $update['password'] = md5($new_password);
-        }
-        $this->user_model->update_record($user_id, $update);
-        $this->session->set_flashdata('message', 'Профиль обновлен');
-        redirect(SITE_URL . "user/profile");
-    }
-    
-    public function profile() {
-        $this->assign_left_panel($data);
-        $user_data = false;
-        if ($user_id = $this->session->userdata('user_id')) {
-            $user_data = $this->user_model->get_user_by_id($user_id);
-            if ($user_data) {
-                $data['user'] = $user_data;
+<a onclick="$(\'#resend_password_form\').submit()">Восстановить пароль?</a>');
+            } else {
+                $this->session->set_flashdata('message', 'Неверные данные для входа');
             }
         }
-        if ($user_data) {
-            $this->load->view('user/profile', $data);
-        } else {
-            redirect(SITE_URL . "welcome/catalog");
-        }
+        redirect(SITE_URL . "welcome/catalog");
     }
 
     public function resend() {
@@ -159,7 +137,8 @@ class User extends CI_Controller {
         $email = $this->input->post('new_user_email');
 
         $email_exists = $this->user_model->get_user_by_email($email);
-        if ($email_exists) {
+
+        if ($email_exists && trim($email)) {
             $email_key = $this->crypt_text($email);
             $this->session->set_flashdata('message', 'e-mail зарегистрирован в системе. 
                 <form action="' . SITE_URL . 'user/resend/" method="post" id="resend_password_form">
@@ -168,24 +147,28 @@ class User extends CI_Controller {
 
 <a onclick="$(\'#resend_password_form\').submit()">Восстановить пароль?</a>');
         } else {
-            $regular_password = $this->generatePassword(6);
-            $insert['email'] = $email;
-            $insert['status'] = 0;
-            $insert['password'] = md5($regular_password);
-            $insert['secret_key'] = md5($email . time());
-
-            $message = "<h4>Ваш пароль для входа на сайт <a href='http://ocean-omsk.ru'>http://ocean-omsk.ru</a> : " . $regular_password . "</h4>";
-            $subject = "Ваш пароль на океан-омск";
-            $status_insert = $this->user_model->insert($insert);
-
-            $headers = "MIME-Version: 1.0" . "\r\n";
-            $headers .= "Content-type:text/html;charset=iso-8859-1" . "\r\n";
-            $headers .= 'From: <admin@ocean-omsk.ru>' . "\r\n";
-            $status = mail($email, $subject, $message, $headers);
-            if ($status) {
-                $this->session->set_flashdata('message', 'Проверьте свой e-mail');
+            if (!trim($email)) {
+                $this->session->set_flashdata('message', 'Некорректный e-mail');
             } else {
-                $this->session->set_flashdata('message', 'Возникла ошибка при отправке e-mail');
+                $regular_password = $this->generatePassword(6);
+                $insert['email'] = $email;
+                $insert['status'] = 0;
+                $insert['password'] = md5($regular_password);
+                $insert['secret_key'] = md5($email . time());
+
+                $message = "<h4>Ваш пароль для входа на сайт <a href='http://ocean-omsk.ru'>http://ocean-omsk.ru</a> : " . $regular_password . "</h4>";
+                $subject = "Ваш пароль на океан-омск";
+                $status_insert = $this->user_model->insert($insert);
+
+                $headers = "MIME-Version: 1.0" . "\r\n";
+                $headers .= "Content-type:text/html;charset=iso-8859-1" . "\r\n";
+                $headers .= 'From: <admin@ocean-omsk.ru>' . "\r\n";
+                $status = mail($email, $subject, $message, $headers);
+                if ($status) {
+                    $this->session->set_flashdata('message', 'Проверьте свой e-mail');
+                } else {
+                    $this->session->set_flashdata('message', 'Возникла ошибка при отправке e-mail');
+                }
             }
         }
 
@@ -195,6 +178,137 @@ class User extends CI_Controller {
     public function import() {
         $this->load->helper('file');
         $string = read_file(REAL_PATH . 'dump/');
+    }
+
+    public function logout() {
+        $this->session->unset_userdata('user_id');
+        redirect(SITE_URL . "welcome/catalog");
+    }
+
+    public function update_profile() {
+        $user_id = $this->session->userdata('user_id');
+        $update['fio'] = $this->input->post('fio');
+        $update['phone'] = $this->input->post('phone');
+        if ($new_password = $this->input->post('new_password')) {
+            $update['password'] = md5($new_password);
+        }
+        $this->user_model->update_record($user_id, $update);
+        $this->session->set_flashdata('message', 'Профиль обновлен');
+        redirect(SITE_URL . "user/profile");
+    }
+
+    public function profile() {
+        $this->assign_left_panel($data);
+        $user_data = false;
+        if ($user_id = $this->session->userdata('user_id')) {
+            $user_data = $this->user_model->get_user_by_id($user_id);
+            if ($user_data) {
+                $data['user'] = $user_data;
+            }
+        }
+        if ($user_data) {
+            $this->load->view('user/profile', $data);
+        } else {
+            redirect(SITE_URL . "welcome/catalog");
+        }
+    }
+
+    public function orders() {
+        $this->assign_left_panel($data);
+        if ($user_id = $this->session->userdata('user_id')) {
+            $orders = $this->orders_model->get_my_orders($user_id);
+            if ($orders) {
+                foreach ($orders as &$order) {
+                    $order_id = $order->id;
+                    $items = $this->headings_model->find_headings($order_id);
+                    $sum = 0;
+                    if ($items) {
+                        foreach ($items as $item) {
+                            $product = $this->product_model->find_product_by_id($item->good_id);
+                            $sum += $product->price * $item->qty;
+                        }
+                    }
+                    $sum = number_format($sum, 2, '.', '') . " руб.";
+                    $order->sum = $sum;
+                }
+            }
+            $data['orders'] = $orders;
+            $this->load->view('user/my_orders', $data);
+        } else {
+            redirect(SITE_URL . "welcome/catalog");
+        }
+    }
+
+    public function load_order() {
+        $load_order_data = $this->session->userdata('view_order');
+        $view_result_price = $this->session->userdata('view_result_price');
+        $view_cart_count = $this->session->userdata('view_cart_count');
+        
+        $this->session->set_userdata('cart_count', $view_cart_count);
+        $this->session->set_userdata('cart_price', $view_result_price);
+        $this->session->set_userdata('orders', $load_order_data);
+        redirect(SITE_URL . "welcome/cart");
+    }
+
+    public function view_order($order_id) {
+        $this->session->unset_userdata('view_order');
+        $this->session->unset_userdata('view_result_price');
+        $this->session->unset_userdata('view_cart_count');
+        
+        $this->assign_left_panel($data);
+        if ($user_id = $this->session->userdata('user_id')) {
+            $order = $this->orders_model->get_order($order_id);
+            if ($order && $order->user_id == $user_id) {
+                $items = $this->headings_model->find_headings($order_id);
+                $orders = false;
+                if ($items) {
+                    $orders = array();
+                    foreach ($items as &$item) {
+                        $product = $this->product_model->find_product_by_id($item->good_id);
+                        $orders[] = array('art' => $product->article, 'count' => $item->qty);
+                    }
+                }
+                $this->session->set_userdata('view_cart_count', count($items));
+                $this->session->set_userdata('view_order', $orders);
+                if ($orders) {
+                    $result_price = 0;
+                    foreach ($orders as $record) {
+
+                        $product = $this->product_model->find_product($record["art"]);
+
+                        $cart[$record["art"]]['qty'] = $record['count'];
+                        $cart[$record["art"]]['id'] = $product[0]->id;
+                        $cart[$record["art"]]['price'] = $product[0]->price;
+                        $cart[$record["art"]]['product_name'] = $product[0]->product_name;
+                        $cart[$record["art"]]['unit'] = $product[0]->unit;
+
+                        $result_price += $record['count'] * $product[0]->price;
+                    }
+                    if ($user_id = $this->session->userdata('user_id')) {
+                        $user_data = $this->user_model->get_user_by_id($user_id);
+                        if ($user_data) {
+                            $data['order_name'] = $user_data->fio;
+                            $data['order_phone'] = $user_data->phone;
+                            $data['order_creds'] = get_cookie('order_creds');
+                        }
+                    } else {
+                        $data['order_name'] = get_cookie('order_name');
+                        $data['order_phone'] = get_cookie('order_phone');
+                        $data['order_creds'] = get_cookie('order_creds');
+                    }
+
+                    $this->session->set_userdata('view_result_price', $result_price);
+                    $data['cart'] = $cart;
+                    $data['result_price'] = $result_price;
+                }
+                $this->load->view('user/cart', $data);
+            } else {
+                $this->session->set_flashdata('message', 'Заказ не найден');
+                redirect(SITE_URL . "user/orders");
+            }
+        } else {
+            redirect(SITE_URL . "welcome/catalog");
+        }
     }
 
 }
