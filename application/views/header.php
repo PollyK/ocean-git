@@ -79,9 +79,14 @@
                 text-decoration:none;
                 -webkit-transition:-webkit-transform 0.075s linear;
             }
+
+		#nav li:hover ul li a{
+text-shadow: -1px -1px 1px #075A71;
+		}
+
             #nav li:hover ul li a:hover{ 
-                -moz-transform:scale(1.05);
-                -webkit-transform:scale(1.05);
+		text-shadow: 0 0 5px #FFFFFF, 0 0 10px #43FFFF, 0 0 9px #9DFFFF;
+			
             }
         </style>
 
