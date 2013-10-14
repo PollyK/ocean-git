@@ -77,6 +77,7 @@ class Welcome extends CI_Controller {
         $this->assign_left_panel($data);
         $data['no_catalog'] = true;
         $data['alias'] = 'gallery';
+        $data['photos'] = $this->gallery_model->get_all_photos();
         $this->load->view('gallery', $data);
     }
 
