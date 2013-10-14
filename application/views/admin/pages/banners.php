@@ -40,7 +40,7 @@
                 ?>
                 <tr>
                     <td>
-                        <img src="<?php echo base_url() . "stuff/news_images/" . $item->banner_photo; ?>">
+                        <img width="100px" src="<?php echo base_url() . "stuff/news_images/" . $item->banner_photo; ?>">
                     </td>
                     <td>
                         <a href="<?php echo SITE_URL; ?>welcome/show_news/<?php echo $item->banner_link_to_article; ?>" target="_blank">
