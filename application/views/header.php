@@ -332,7 +332,7 @@
             <div style='display:none'>
                 <div id='inline_content' style='padding:10px; background:#fff;'>
                     <a href="<?php echo SITE_URL; ?>welcome/show_news/<?php echo $flash_banner->banner_link_to_article; ?>" title="<?php echo $flash_banner->banner_header; ?>">
-                        <img src="<?php echo base_url() . "stuff/news_images/" . $flash_banner->banner_photo; ?>">
+                        <img width="100px" src="<?php echo base_url() . "stuff/news_images/" . $flash_banner->banner_photo; ?>">
                     </a>
                 </div>
             </div>
