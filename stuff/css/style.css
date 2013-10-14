@@ -868,15 +868,14 @@ div.search-button:hover .fish-search {
     box-shadow: 0 0 5px #FFFFFF, 0 0 10px #43FFFF;
     color: white;
     font-size: 14px;
-    font-weight: bold;
     height: 16px;
-    opacity: 0.81;
     position: absolute;
     right: -15px;
     text-align: center;
     top: -5px;
     width: 16px;
     text-shadow: none;
+font-family: "eurostyle","eurostyle-ie"
 }
 
 .delete_cart_item {
