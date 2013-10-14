@@ -872,9 +872,9 @@ div.search-button:hover .fish-search {
     height: 16px;
     opacity: 0.81;
     position: absolute;
-    right: -8px;
+    right: -15px;
     text-align: center;
-    top: -2px;
+    top: -5px;
     width: 16px;
     text-shadow: none;
 }
