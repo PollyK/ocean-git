@@ -9,7 +9,7 @@
     <head>
         <title>Раздел каталога</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <link rel="stylesheet" href="<?php echo base_url(); ?>stuff/css/style.css" type="text/css">
+        <link rel="stylesheet" href="<?php echo base_url(); ?>stuff/css/style.css?1" type="text/css">
         <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
         <!--[if lt IE 9]>
           <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>

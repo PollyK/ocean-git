@@ -880,8 +880,8 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f6bdc3', end
     border-radius: 9px 9px 9px 9px;
     box-shadow: 0 2px 2px #1F1F1F;
     color: #FFFFFF;
-    font-family: "eurostyle","eurostyle-ie";
-    font-size: 14px;
+    font-family: arial;
+    font-size: 13px;
     height: 16px;
     min-width: 12px;
     padding: 0 2px;
@@ -906,8 +906,8 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f6bdc3', end
 .registr-block a {
     text-align: right;
     color: #46D0D1;
-    font-family: "eurostyle","eurostyle-ie";
-    font-size: 16px;
+    font-family: verdana;
+    font-size: 12px;
     letter-spacing: 0.1em;
     text-shadow: -1px -1px 1px #075A71;
     padding-top: 6px;
