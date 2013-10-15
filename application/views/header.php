@@ -26,7 +26,7 @@
         <link rel="stylesheet" href="<?php echo base_url(); ?>stuff/css/galleriffic-2.css" type="text/css">
         <link rel="stylesheet" href="<?php echo base_url(); ?>stuff/css/basic.css" type="text/css">
 <!--            <style type="text/css">
-            @import "<?php //echo base_url();                             ?>stuff/css/tree.css";
+            @import "<?php //echo base_url();                                     ?>stuff/css/tree.css";
         </style>-->
         <style type="text/css">
             .dataTables_filter, .dataTables_info{
@@ -79,9 +79,14 @@
                 text-decoration:none;
                 -webkit-transition:-webkit-transform 0.075s linear;
             }
+
+		#nav li:hover ul li a{
+text-shadow: -1px -1px 1px #075A71;
+		}
+
             #nav li:hover ul li a:hover{ 
-                -moz-transform:scale(1.05);
-                -webkit-transform:scale(1.05);
+		text-shadow: 0 0 5px #FFFFFF, 0 0 10px #43FFFF, 0 0 9px #9DFFFF;
+			
             }
         </style>
 
@@ -282,29 +287,57 @@
             });
         </script>
 
+        <?php if ($flash_message = $this->session->flashdata('message')) { ?>
+            <script type="text/javascript">
+                $(document).ready(function(){
+                    $(".inline").colorbox({inline:true, width:"50%"});
+                    $.colorbox({inline:true, href:"#inline_content2", width:"50%"});
+                });
+            </script>
+
+            <a class='inline' href="#inline_content2"></a>
+            <div style='display:none'>
+                <div id='inline_content2' >
+                    <?php echo $flash_message; ?>
+                </div>
+            </div>
+        <?php } ?> 
 
         <?php if (isset($flash_banner) && $flash_banner) { ?>
             <script type="text/javascript">
                 $(document).ready(function(){
                     $(".inline").colorbox({inline:true, width:"50%"});
                     $.colorbox({inline:true, href:"#inline_content", width:"50%"});
-                    
+                                                    
                     $('#cboxClose').click(function(){
                         $.post(
                         "<?php echo SITE_URL; ?>welcome/disable_flash_banner", 
                         {banner_id : <?php echo $flash_banner->id; ?>},
                         function(data){
-                                
+                                                                
                         },"json");
                     });
                 });
+                    
+                function isValidEmailAddress(emailAddress) {
+                    var pattern = new RegExp(/^((([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+(\.([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+)*)|((\x22)((((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(([\x01-\x08\x0b\x0c\x0e-\x1f\x7f]|\x21|[\x23-\x5b]|[\x5d-\x7e]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(\\([\x01-\x09\x0b\x0c\x0d-\x7f]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))))*(((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(\x22)))@((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?$/i);
+                    return pattern.test(emailAddress);
+                };
+                function check_email(el){
+                    var status = isValidEmailAddress($('#'+el).val());
+                    if(!status){
+                        alert('Некорректный e-mail');
+                        return false;
+                    }
+                    return true;
+                }
             </script>
 
             <a class='inline' href="#inline_content"></a>
             <div style='display:none'>
                 <div id='inline_content' style='padding:10px; background:#fff;'>
                     <a href="<?php echo SITE_URL; ?>welcome/show_news/<?php echo $flash_banner->banner_link_to_article; ?>" title="<?php echo $flash_banner->banner_header; ?>">
-                        <img src="<?php echo base_url() . "stuff/news_images/" . $flash_banner->banner_photo; ?>">
+                        <img  src="<?php echo base_url() . "stuff/news_images/" . $flash_banner->banner_photo; ?>">
                     </a>
                 </div>
             </div>
@@ -316,26 +349,36 @@
 
             <div style='display:none'>
                 <div id='form-registr' style='padding:10px; '>
-                    <div class="row">Ваш e-mail:</div>
-                    <input type="text">
-                    <div class="row">Пароль отправим вам на почту</div>
-                    <div><button class="submit">Отправить</button></div>
+                    <form action="<?php echo SITE_URL; ?>user/welcome" method="POST" target="_parent" name="invite_user_form" onsubmit="return check_email('new_user_email')">
+                        <div class="row">Ваш e-mail:</div>
+                        <input type="text" name="new_user_email" id="new_user_email">
+                        <div class="row">Пароль будет отправлен вам на почту</div>
+                        <div><button class="submit">Отправить</button></div>
+                    </form>
                 </div>
                 <div id='form-login' style='padding:10px; '>
-                    <div class="row">Ваш e-mail:</div>
-                    <input type="text">
-                    <div class="row">Ваш пароль:</div>
-                    <input type="password">
-                    <div><button class="submit">Войти</button></div>
-                    
+                    <form action="<?php echo SITE_URL; ?>user/login" method="POST" target="_parent"  onsubmit="return check_email('login_email')">
+                        <div class="row">Ваш e-mail:</div>
+                        <input type="text" name="email" id="login_email">
+                        <div class="row">Ваш пароль:</div>
+                        <input type="password" name="password" type="password">
+                        <div><button class="submit">Войти</button></div>
+                    </form>
                 </div>
+                <!--Form registr-login END-->
             </div>
-            <!--Form registr-login END-->
-
-            <div class="registr-block">
-                <a id="form-registr-url" class="float-right" href="#form-registr" style="margin-left:2px;"> Регистрация</a> 
-                <a id="form-login-url" class="float-right" href="#form-login">Вход / </a>
-            </div>
+            <?php if ($this->session->userdata('user_id')) { ?>
+                <div class="registr-block">
+                    <a href="<?php echo SITE_URL; ?>user/orders" class="float">Мои заказы / </a>
+                    <a style="margin-left:2px;" href="<?php echo SITE_URL; ?>user/profile" class="float"> Профиль</a>
+                    <a href="<?php echo SITE_URL; ?>user/logout" class="float-right cboxElement" id="form-login-url">Выход</a>
+                </div>
+            <?php } else { ?>
+                <div class="registr-block">
+                    <a id="form-registr-url" class="float-right" href="#form-registr" style="margin-left:2px;"> Регистрация</a> 
+                    <a id="form-login-url" class="float-right" href="#form-login">Вход / </a>
+                </div>
+            <?php } ?>
             <ul id="nav">
                 <li <?php if (!isset($alias)) { ?> class="active" <?php } ?>>
                     <a href="<?php echo SITE_URL; ?>welcome/news">
@@ -494,7 +537,7 @@
                                     foreach ($banners as $banner) {
                                         ?>
                                         <a href="<?php echo SITE_URL; ?>welcome/show_news/<?php echo $banner->banner_link_to_article; ?>" title="<?php echo $banner->banner_header; ?>">
-                                            <img src="<?php echo base_url() . "stuff/news_images/" . $banner->banner_photo; ?>">
+                                            <img width="270px" src="<?php echo base_url() . "stuff/news_images/" . $banner->banner_photo; ?>">
                                         </a>
                                         <?php
                                     }

@@ -863,20 +863,19 @@ div.search-button:hover .fish-search {
 }
 
 #nav span.message-news {
-    background-color: #1CF8FE;
+    background-color: #EA0000;
     border-radius: 9px 9px 9px 9px;
     box-shadow: 0 0 5px #FFFFFF, 0 0 10px #43FFFF;
-    color: #15596C;
+    color: white;
     font-size: 14px;
-    font-weight: bold;
     height: 16px;
-    opacity: 0.81;
     position: absolute;
-    right: -8px;
+    right: -15px;
     text-align: center;
-    top: -2px;
+    top: -5px;
     width: 16px;
     text-shadow: none;
+font-family: "eurostyle","eurostyle-ie"
 }
 
 .delete_cart_item {
@@ -906,14 +905,24 @@ div.search-button:hover .fish-search {
 }
 
 .registr-block {
+    padding-left: 162px;
     margin-right: 162px;
 }
 
-#form-registr, #form-login {
+#form-registr, #form-login, #block-message {
     color: #FFFFFF;
     text-align: center;
     background-color: #0d7d93;
     height: 200px;
+    font: 18px "eurostyle","eurostyle-ie";
+    letter-spacing: 0.08em;
+    padding: 10px 0 41px !important;
+}
+
+#inline_content2 {
+    color: #FFFFFF;
+    text-align: center;
+    background-color: #0d7d93;
     font: 18px "eurostyle","eurostyle-ie";
     letter-spacing: 0.08em;
     padding: 10px 0 41px !important;

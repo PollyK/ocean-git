@@ -77,6 +77,7 @@ class Welcome extends CI_Controller {
         $this->assign_left_panel($data);
         $data['no_catalog'] = true;
         $data['alias'] = 'gallery';
+        $data['photos'] = $this->gallery_model->get_all_photos();
         $this->load->view('gallery', $data);
     }
 
@@ -103,9 +104,18 @@ class Welcome extends CI_Controller {
             }
         }
 
-        $data['order_name'] = get_cookie('order_name');
-        $data['order_phone'] = get_cookie('order_phone');
-        $data['order_creds'] = get_cookie('order_creds');
+       if ($user_id = $this->session->userdata('user_id')) {
+            $user_data = $this->user_model->get_user_by_id($user_id);
+            if ($user_data) {
+                $data['order_name'] = $user_data->fio;
+                $data['order_phone'] = $user_data->phone;
+                $data['order_creds'] = get_cookie('order_creds');
+            }
+        } else {
+            $data['order_name'] = get_cookie('order_name');
+            $data['order_phone'] = get_cookie('order_phone');
+            $data['order_creds'] = get_cookie('order_creds');
+        }
 
 
         $data['cart'] = $cart;
@@ -114,10 +124,9 @@ class Welcome extends CI_Controller {
         $this->load->view('cart', $data);
     }
 
-    function delete_cart_item() {
+    function delete_cart_item($id) {
         $responce = new stdClass();
 
-        $id = (int) $this->input->post('cart_element_id');
         $orders = $this->session->userdata('orders');
         $cart_price = 0;
 
@@ -133,6 +142,7 @@ class Welcome extends CI_Controller {
                 }
             }
             //var_dump($orders_set);
+            $this->session->set_userdata('cart_count', count($orders_set));
             $this->session->set_userdata('cart_price', $cart_price);
             $this->session->set_userdata('orders', $orders_set);
             $responce->total = $cart_price;
@@ -140,7 +150,8 @@ class Welcome extends CI_Controller {
         } else {
             $responce->delete_id = 0;
         }
-        echo json_encode($responce);
+        //echo json_encode($responce);
+        redirect(SITE_URL."welcome/cart");
     }
 
     public function cleare_cart() {
@@ -217,13 +228,14 @@ class Welcome extends CI_Controller {
 
         // $this->session->userdata('orders');die;
         if ($this->session->userdata('orders')) {
-
+            $user_id = $this->session->userdata('user_id');
             $orders_data = array(
                 'date' => date("Y-m-d h:i:s"),
                 'contact_name' => $contact['contact_name'],
                 'contact_phone' => $contact['contact_phone'],
                 'contact_dopinfo' => $contact['contact_dop'],
-                'ip' => $_SERVER["REMOTE_ADDR"]
+                'ip' => $_SERVER["REMOTE_ADDR"],
+                'user_id'=>($user_id)?$user_id:"0"
             );
 
             $order_id = $this->orders_model->insert($orders_data);

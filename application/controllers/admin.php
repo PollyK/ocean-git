@@ -43,6 +43,12 @@ class Admin extends CI_Controller {
                 'add_banners' => array("title" => "Добавить баннер", "url" => "add_banners")
             )
         ),
+        'gallery' => array("title" => "Галерея",
+            "url" => "gallery",
+            "subpages" => array(
+                'photos' => array("title" => "Фото", "url" => "photos")
+            )
+        ),
         'service' => array("title" => "Сервис",
             "url" => "service",
             "subpages" => array(
@@ -58,7 +64,7 @@ class Admin extends CI_Controller {
 
         $user_session = $this->session->userdata('admin_session');
         //if (!$user_session && ($_SERVER['REQUEST_URI'] != "/admin/login" && $_SERVER['REQUEST_URI'] != "/admin/login_action")) {
-        if (!$user_session && substr_count($_SERVER['REQUEST_URI'], "/admin/login")==0) {
+        if (!$user_session && substr_count($_SERVER['REQUEST_URI'], "/admin/login") == 0) {
             redirect(SITE_URL . 'admin/login');
         }
     }
@@ -137,6 +143,20 @@ class Admin extends CI_Controller {
     public function delete_page($page_id) {
         $this->pages_model->delete_record($page_id);
         redirect(SITE_URL . "admin/pages");
+    }
+
+    public function gallery() {
+        $data['nav_menu'] = $this->nav_items;
+
+        $photos = $this->gallery_model->get_all_photos();
+
+        $data['photos'] = $photos;
+
+        $data['active_page'] = "gallery";
+        $data['active_subpage'] = "photos";
+        $data['action'] = "list";
+
+        $this->load->view('admin/gallery', $data);
     }
 
     public function faq($action = false, $parameter = false) {
@@ -256,7 +276,7 @@ EOH;
 
         $config['upload_path'] = REAL_PATH . 'stuff/news_images/';
         $config['allowed_types'] = 'gif|jpg|png';
-        $config['file_name'] = 'news_'.time();
+        $config['file_name'] = 'news_' . time();
 
         $this->load->library('upload', $config);
 
@@ -647,6 +667,113 @@ EOH;
 
         set_success_message('Выбранные файлы удачно импортированы');
         redirect(SITE_URL . "admin/service");
+    }
+
+    public function upload_gallery_image() {
+        //banner_file
+        $config['upload_path'] = REAL_PATH . 'stuff/gallery/';
+        $config['allowed_types'] = 'gif|jpg|png';
+        $config['file_name'] = uniqid() . date("YmdHis");
+        $this->load->library('upload', $config);
+        if (!$this->upload->do_upload('image_file')) {
+            set_error_message($this->upload->display_errors());
+            redirect(SITE_URL . "admin/gallery");
+        } else {
+            $file = $this->upload->data();
+            $uploaded_filename = $file['file_name'];
+
+
+            $config2['image_library'] = 'gd2';
+            $config2['source_image'] = $config['upload_path'] . $uploaded_filename;
+            $config2['new_image'] = $config['upload_path'] . "th_" . $uploaded_filename;
+            $config2['create_thumb'] = false;
+            $config2['maintain_ratio'] = false;
+            $config2['width'] = 100;
+            $config2['height'] = 100;
+            $this->load->library('image_lib');
+            $this->image_lib->initialize($config2);
+
+            $status = $this->image_lib->resize();
+            $insert['name'] = $this->input->post('title');
+            $insert['image'] = 'stuff/gallery/' . $uploaded_filename;
+            $insert['image_th'] = 'stuff/gallery/th_' . $uploaded_filename;
+            $id = $this->gallery_model->create_record($insert);
+
+            if ($id) {
+                set_success_message("Фото успешно добавлено");
+            } else {
+                set_error_message("Фото не создано. Свяжитесь с поддержкой (3812 378470)");
+            }
+            redirect(SITE_URL . "admin/gallery");
+        }
+    }
+
+    public function delete_gallery_photo($id) {
+        $record = $this->gallery_model->get_record($id);
+        if ($record) {
+            $file = REAL_PATH . $record->image;
+            $file_th = REAL_PATH . $record->image_th;
+            unlink($file);
+            unlink($file_th);
+            $this->gallery_model->delete_record($id);
+            set_success_message("Фото удалено");
+        } else {
+            set_error_message("Фото не найдено");
+        }
+        redirect(SITE_URL . "admin/gallery");
+    }
+
+    public function do_update_gallery_photo() {
+        $id = $this->input->post('id');
+        $record = $this->gallery_model->get_record($id);
+        if ($record) {
+            $update['name'] = $this->input->post('title');
+
+            $config['upload_path'] = REAL_PATH . 'stuff/gallery/';
+            $config['allowed_types'] = 'gif|jpg|png';
+            $config['file_name'] = uniqid() . date("YmdHis");
+            $this->load->library('upload', $config);
+            if (!$this->upload->do_upload('photo_file')) {
+                //set_error_message($this->upload->display_errors());
+            } else {
+                $file = $this->upload->data();
+                $uploaded_filename = $file['file_name'];
+                $config2['image_library'] = 'gd2';
+                $config2['source_image'] = $config['upload_path'] . $uploaded_filename;
+                $config2['new_image'] = $config['upload_path'] . "th_" . $uploaded_filename;
+                $config2['create_thumb'] = false;
+                $config2['maintain_ratio'] = false;
+                $config2['width'] = 100;
+                $config2['height'] = 100;
+                $this->load->library('image_lib');
+                $this->image_lib->initialize($config2);
+                $status = $this->image_lib->resize();
+                $update['image'] = 'stuff/gallery/' . $uploaded_filename;
+                $update['image_th'] = 'stuff/gallery/th_' . $uploaded_filename;
+            }
+            $this->gallery_model->update_record($id, $update);
+        } else {
+            set_error_message("Фото не найдено");
+        }
+        redirect(SITE_URL . "admin/gallery");
+    }
+
+    public function edit_gallery_photo($id) {
+        $record = $this->gallery_model->get_record($id);
+        if ($record) {
+            $data['photo'] = $record;
+
+            $data['nav_menu'] = $this->nav_items;
+
+            $data['active_page'] = "gallery";
+            $data['active_subpage'] = "photos";
+            $data['action'] = "list";
+
+            $this->load->view('admin/edit_gallery_photo', $data);
+        } else {
+            set_error_message("Фото не найдено");
+            redirect(SITE_URL . "admin/gallery");
+        }
     }
 
     /* SERVICE END */

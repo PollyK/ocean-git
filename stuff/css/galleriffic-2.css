@@ -60,6 +60,9 @@ div.slideshow a.advance-link:hover, div.slideshow a.advance-link:active, div.sli
     text-decoration: none;
 }
 div.slideshow img {
+    vertical-align: top;
+    max-width: 500px;
+    max-height: 500px;
     vertical-align: middle;
     border: 1px solid #ccc;
 }
@@ -94,6 +97,7 @@ div.caption {
 div.image-title {
     font-weight: bold;
     font-size: 1.4em;
+    
 }
 div.image-desc {
     left: -2px;
@@ -160,4 +164,8 @@ div.pagination span.current {
 div.pagination span.ellipsis {
     border: none;
     padding: 5px 0 3px 2px;
+}
+
+.image-title{
+    text-align: center;
 }

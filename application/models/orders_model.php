@@ -32,6 +32,16 @@ class orders_model extends CI_Model {
         
     }
     
+    public function get_order($id){
+        $this->db->where('id', $id);
+        $res = $this->db->get('orders');
+        if($res->num_rows()){
+            return $res->row();
+        }else{
+            return false;
+        }
+    }
+    
     public function update_record($id, $update) {
         foreach ($update as $key => $item) {
             $this->db->set($key, $item);
@@ -44,6 +54,17 @@ class orders_model extends CI_Model {
         //$escaped = $this->cp1251_utf8($keyword);        
         $this->db->where('id', $order_id);
         $this->db->delete('orders');
+    }
+    
+    public function get_my_orders($user_id){
+        $this->db->where('user_id', $user_id);
+        $this->db->order_by('date', 'ASC');
+        $res = $this->db->get('orders');
+        if($res->num_rows()){
+            return $res->result();
+        }else{
+            return false;
+        }
     }
 
 }
