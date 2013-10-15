@@ -866,7 +866,7 @@ div.search-button:hover .fish-search {
     background-color: #1CF8FE;
     border-radius: 9px 9px 9px 9px;
     box-shadow: 0 0 5px #FFFFFF, 0 0 10px #43FFFF;
-    color: red;
+    color: #15596C;
     font-size: 14px;
     font-weight: bold;
     height: 16px;
@@ -876,7 +876,7 @@ div.search-button:hover .fish-search {
     text-align: center;
     top: -2px;
     width: 16px;
-    text-shadow: 0 0 2px #FFFFFF, 0 0 6px #FFFFFF;
+    text-shadow: none;
 }
 
 .delete_cart_item {
@@ -907,7 +907,6 @@ div.search-button:hover .fish-search {
 
 .registr-block {
     margin-right: 162px;
-    padding-left: 160px;
 }
 
 #form-registr, #form-login {
