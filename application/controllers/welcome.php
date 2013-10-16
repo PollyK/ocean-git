@@ -476,7 +476,7 @@ class Welcome extends CI_Controller {
 
                     $row[] = $item->qty;
                     $row[] = $item->unit;
-                    $row[] = '<input type="text" value="1" style="width:50px;">';
+                    $row[] = '<input type="text" value="" style="width:50px;">';
                     $row[] = '<button class="basket-table-img"></button>';
 
                     $output['aaData'][] = $row;
