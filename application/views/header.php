@@ -255,6 +255,10 @@ text-shadow: -1px -1px 1px #075A71;
                     var record = $(this).parent().parent();
                     var art = record.find('td:first').find('div.article').html();
                     var count =   record.find('input').attr('value');
+                    if(count==""){
+                        count ="1";
+                        record.find('input').val("1");
+                    }
                     var count_all = record.find(':nth-child(5)').html();
                     var price = record.find(':nth-child(4)').html();
                         
@@ -383,7 +387,7 @@ text-shadow: -1px -1px 1px #075A71;
                 <li <?php if (!isset($alias)) { ?> class="active" <?php } ?>>
                     <a href="<?php echo SITE_URL; ?>welcome/news">
                         Новости
-                        <span <?php if ($this->session->userdata('news_unread')) { ?>  class="message-news" ><?php echo $this->session->userdata('news_unread'); ?></span> <?php } ?>
+                        <span <?php if ($this->session->userdata('news_unread')) { ?>  class="message-news" ></span> <?php } ?>
                     </a>
                 </li>
 
