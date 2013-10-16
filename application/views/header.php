@@ -341,7 +341,7 @@ text-shadow: -1px -1px 1px #075A71;
             <div style='display:none'>
                 <div id='inline_content' style='padding:10px; background:#fff;'>
                     <a href="<?php echo SITE_URL; ?>welcome/show_news/<?php echo $flash_banner->banner_link_to_article; ?>" title="<?php echo $flash_banner->banner_header; ?>">
-                        <img  src="<?php echo base_url() . "stuff/news_images/" . $flash_banner->banner_photo; ?>">
+                        <img width="640px"  src="<?php echo base_url() . "stuff/news_images/" . $flash_banner->banner_photo; ?>">
                     </a>
                 </div>
             </div>
@@ -375,7 +375,7 @@ text-shadow: -1px -1px 1px #075A71;
                 <div class="registr-block">
                     <a href="<?php echo SITE_URL; ?>user/orders" class="float">Мои заказы / </a>
                     <a style="margin-left:2px;" href="<?php echo SITE_URL; ?>user/profile" class="float"> Профиль</a>
-                    <a href="<?php echo SITE_URL; ?>user/logout" class="float-right cboxElement" id="form-login-url">Выход</a>
+                    <a href="<?php echo SITE_URL; ?>user/logout" class="float-right" id="form-login-url">Выход</a>
                 </div>
             <?php } else { ?>
                 <div class="registr-block">
