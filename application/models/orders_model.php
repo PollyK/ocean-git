@@ -19,7 +19,7 @@ class orders_model extends CI_Model {
 
     public function find_orders(){
         //$escaped = $this->cp1251_utf8($keyword);
-        $sql = "SELECT * FROM orders";
+        $sql = "SELECT * FROM orders ORDER BY id DESC";
         $res = $this->db->query($sql);
         return $res->result();
     }

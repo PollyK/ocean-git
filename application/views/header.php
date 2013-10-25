@@ -26,7 +26,7 @@
         <link rel="stylesheet" href="<?php echo base_url(); ?>stuff/css/galleriffic-2.css" type="text/css">
         <link rel="stylesheet" href="<?php echo base_url(); ?>stuff/css/basic.css" type="text/css">
 <!--            <style type="text/css">
-            @import "<?php //echo base_url();                                     ?>stuff/css/tree.css";
+            @import "<?php //echo base_url();                                      ?>stuff/css/tree.css";
         </style>-->
         <style type="text/css">
             .dataTables_filter, .dataTables_info{
@@ -80,13 +80,13 @@
                 -webkit-transition:-webkit-transform 0.075s linear;
             }
 
-		#nav li:hover ul li a{
-text-shadow: -1px -1px 1px #075A71;
-		}
+            #nav li:hover ul li a{
+                text-shadow: -1px -1px 1px #075A71;
+            }
 
             #nav li:hover ul li a:hover{ 
-		text-shadow: 0 0 5px #FFFFFF, 0 0 10px #43FFFF, 0 0 9px #9DFFFF;
-			
+                text-shadow: 0 0 5px #FFFFFF, 0 0 10px #43FFFF, 0 0 9px #9DFFFF;
+
             }
         </style>
 
@@ -291,11 +291,15 @@ text-shadow: -1px -1px 1px #075A71;
             });
         </script>
 
+        <?php $no_ads = false; ?>
         <?php if ($flash_message = $this->session->flashdata('message')) { ?>
+        <?php $no_ads = true; ?>
             <script type="text/javascript">
                 $(document).ready(function(){
+                        
                     $(".inline").colorbox({inline:true, width:"50%"});
                     $.colorbox({inline:true, href:"#inline_content2", width:"50%"});
+                        
                 });
             </script>
 
@@ -310,42 +314,52 @@ text-shadow: -1px -1px 1px #075A71;
         <?php if (isset($flash_banner) && $flash_banner) { ?>
             <script type="text/javascript">
                 $(document).ready(function(){
-                    $(".inline").colorbox({inline:true, width:"50%"});
-                    $.colorbox({inline:true, href:"#inline_content", width:"50%"});
-                                                    
-                    $('#cboxClose').click(function(){
-                        $.post(
-                        "<?php echo SITE_URL; ?>welcome/disable_flash_banner", 
-                        {banner_id : <?php echo $flash_banner->id; ?>},
-                        function(data){
-                                                                
-                        },"json");
-                    });
-                });
-                    
-                function isValidEmailAddress(emailAddress) {
-                    var pattern = new RegExp(/^((([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+(\.([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+)*)|((\x22)((((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(([\x01-\x08\x0b\x0c\x0e-\x1f\x7f]|\x21|[\x23-\x5b]|[\x5d-\x7e]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(\\([\x01-\x09\x0b\x0c\x0d-\x7f]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))))*(((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(\x22)))@((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?$/i);
-                    return pattern.test(emailAddress);
-                };
-                function check_email(el){
-                    var status = isValidEmailAddress($('#'+el).val());
-                    if(!status){
-                        alert('Некорректный e-mail');
-                        return false;
-                    }
-                    return true;
-                }
+    <?php
+    if (file_exists(REAL_PATH . "stuff/news_images/" . $flash_banner->banner_photo) && !$no_ads) {
+        ?>
+                                    $(".inline").colorbox({inline:true, width:"50%"});
+                                    $.colorbox({inline:true, href:"#inline_content", width:"50%"});
+                                                            
+                                    $('#cboxClose').click(function(){
+                                        $.post(
+                                        "<?php echo SITE_URL; ?>welcome/disable_flash_banner", 
+                                        {banner_id : <?php echo $flash_banner->id; ?>},
+                                        function(data){
+                                                                        
+                                        },"json");
+                                    });
+        <?php
+    }
+    ?>
+                        });
+                        
+                        function isValidEmailAddress(emailAddress) {
+                            var pattern = new RegExp(/^((([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+(\.([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+)*)|((\x22)((((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(([\x01-\x08\x0b\x0c\x0e-\x1f\x7f]|\x21|[\x23-\x5b]|[\x5d-\x7e]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(\\([\x01-\x09\x0b\x0c\x0d-\x7f]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))))*(((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(\x22)))@((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?$/i);
+                            return pattern.test(emailAddress);
+                        };
+                        function check_email(el){
+                            var status = isValidEmailAddress($('#'+el).val());
+                            if(!status){
+                                alert('Некорректный e-mail');
+                                return false;
+                            }
+                            return true;
+                        }
             </script>
 
             <a class='inline' href="#inline_content"></a>
             <div style='display:none'>
                 <div id='inline_content' style='padding:10px; background:#fff;'>
                     <a href="<?php echo SITE_URL; ?>welcome/show_news/<?php echo $flash_banner->banner_link_to_article; ?>" title="<?php echo $flash_banner->banner_header; ?>">
-                        <img width="640px"  src="<?php echo base_url() . "stuff/news_images/" . $flash_banner->banner_photo; ?>">
+                        <?php
+                        $sizes = getimagesize(REAL_PATH . "stuff/news_images/" . $flash_banner->banner_photo);
+                        $height = round((640 * $sizes[1]) / $sizes[0], 0);
+                        ?>
+                        <img width="640px"  height="<?php echo $height; ?>px" src="<?php echo base_url() . "stuff/news_images/" . $flash_banner->banner_photo; ?>">
                     </a>
                 </div>
             </div>
-        <?php } ?>
+<?php } ?>
 
         <section id="all-content">
 
@@ -371,18 +385,18 @@ text-shadow: -1px -1px 1px #075A71;
                 </div>
                 <!--Form registr-login END-->
             </div>
-            <?php if ($this->session->userdata('user_id')) { ?>
+<?php if ($this->session->userdata('user_id')) { ?>
                 <div class="registr-block">
                     <a href="<?php echo SITE_URL; ?>user/orders" class="float">Мои заказы / </a>
                     <a style="margin-left:2px;" href="<?php echo SITE_URL; ?>user/profile" class="float"> Профиль</a>
-                    <a href="<?php echo SITE_URL; ?>user/logout" class="float-right" id="form-login-url">Выход</a>
+                    <a href="<?php echo SITE_URL; ?>user/logout" class="float-right" id="form-logout-url">Выход</a>
                 </div>
-            <?php } else { ?>
+<?php } else { ?>
                 <div class="registr-block">
                     <a id="form-registr-url" class="float-right" href="#form-registr" style="margin-left:2px;"> Регистрация</a> 
                     <a id="form-login-url" class="float-right" href="#form-login">Вход / </a>
                 </div>
-            <?php } ?>
+<?php } ?>
             <ul id="nav">
                 <li <?php if (!isset($alias)) { ?> class="active" <?php } ?>>
                     <a href="<?php echo SITE_URL; ?>welcome/news">
@@ -407,7 +421,7 @@ text-shadow: -1px -1px 1px #075A71;
             </ul>
             <header>
 
-                <?php if (isset($no_catalog) && $no_catalog) { ?>
+<?php if (isset($no_catalog) && $no_catalog) { ?>
                     <a href="<?php echo SITE_URL; ?>welcome/catalog"><div class="logo"></div></a>
                 <?php } else { ?>
                     <a href="<?php echo SITE_URL; ?>"><div class="logo"></div></a>
@@ -419,44 +433,44 @@ text-shadow: -1px -1px 1px #075A71;
                             <div class="text-basket">
                                 <h3>Ваша корзина:<br></h3>
                                 <span id="cart_count">
-                                    <?php
-                                    if ($this->session->userdata('cart_count')) {
-                                        echo $this->session->userdata('cart_count') . ' товаров/';
-                                    }
-                                    ?>
+<?php
+if ($this->session->userdata('cart_count')) {
+    echo $this->session->userdata('cart_count') . ' товаров/';
+}
+?>
                                 </span> 
                                 <span id="cart_price">
-                                    <?php
-                                    if ($this->session->userdata('cart_price')) {
-                                        echo $this->session->userdata('cart_price') . ' руб.';
-                                    }
-                                    ?>
+<?php
+if ($this->session->userdata('cart_price')) {
+    echo $this->session->userdata('cart_price') . ' руб.';
+}
+?>
                                 </span> 
                             </div>
                         </div>
                     </a>    
                     <div class="search-faq">
-                        <?php
-                        if (isset($no_catalog) && $no_catalog) {
-                            
-                        } else {
-                            ?>
+<?php
+if (isset($no_catalog) && $no_catalog) {
+    
+} else {
+    ?>
                             <input id="search" type="text" name="search">
                             <div class="search-button" onclick="global_search()">
                                 <div class="fish-search"></div>
                             </div>
                             <a class="faq" href="<?php echo SITE_URL; ?>welcome/faq">
                             </a>
-                        <?php } ?>
+<?php } ?>
                     </div>
                 </div>
             </header>
 
-            <?php
-            if (isset($no_catalog) && $no_catalog) {
-                
-            } else {
-                ?>
+<?php
+if (isset($no_catalog) && $no_catalog) {
+    
+} else {
+    ?>
                 <section class="content">
                     <aside class="float">
                         <div class="lathing"></div>
@@ -468,63 +482,63 @@ text-shadow: -1px -1px 1px #075A71;
                         <div onclick="tree_toggle(arguments[0])" style="width: 270px; margin-left: 20px; position: relative; z-index: 100;">
 
                             <ul class="Container level_1">
-                                <?php if ($catalog) { ?>
+    <?php if ($catalog) { ?>
                                     <?php foreach ($catalog as $item_0) { ?>
                                         <li class="Node ExpandClosed ">
                                             <div class="<?php echo!($item_0['content']) ? "IsLastmy" : "Expand"; ?>"></div>
                                             <div class="Content"><?php echo $item_0['name']; ?></div>
 
-                                            <?php if ($item_0['content']) { ?>
+            <?php if ($item_0['content']) { ?>
                                                 <ul class="Container level_2">
-                                                    <?php foreach ($item_0['content'] as $item_1) { ?>
+                                                <?php foreach ($item_0['content'] as $item_1) { ?>
 
                                                         <?php if (!($item_1['content'])) { ?>    
                                                             <li class="Node IsLast">
-                                                            <?php } else { ?>
+                                                        <?php } else { ?>
                                                             <li class="Node ExpandClosed">    
                                                             <? } ?>        
                                                             <div class="<?php echo!($item_1['content']) ? "IsLastmy" : "Expand"; ?>"></div>
                                                             <div class="Content" >
-                                                                <?php if ($item_1['content']) { ?>
+                    <?php if ($item_1['content']) { ?>
                                                                     <?php echo $item_1['name']; ?>
                                                                 <?php } else { ?>
                                                                     <a onclick="load_products('<?php echo $item_1['group_id']; ?>')">
-                                                                        <?php echo $item_1['name']; ?>
+                                                                    <?php echo $item_1['name']; ?>
                                                                     </a>
-                                                                <?php } ?>
+                                                                    <?php } ?>
                                                             </div>
-                                                            <?php if ($item_1['content']) { ?>
+                                                                <?php if ($item_1['content']) { ?>
                                                                 <ul class="Container level_3">
-                                                                    <?php foreach ($item_1['content'] as $item_2) { ?>
+                                                                <?php foreach ($item_1['content'] as $item_2) { ?>
                                                                         <li class="Node ExpandLeaf IsLast">
                                                                             <div class="<?php echo!($item_2['content']) ? "IsLastmy" : "Expand"; ?>"></div>
                                                                             <div class="Content">
                                                                                 <a onclick="load_products('<?php echo $item_2['group_id']; ?>')">
-                                                                                    <?php echo $item_2['name']; ?>
+                            <?php echo $item_2['name']; ?>
                                                                                 </a>
                                                                             </div>
-                                                                            <?php if ($item_2['content']) { ?>
+                            <?php if ($item_2['content']) { ?>
                                                                                 <ul class="Container level_4">
-                                                                                    <?php foreach ($item_2['content'] as $item_3) { ?>
+                                                                                <?php foreach ($item_2['content'] as $item_3) { ?>
                                                                                         <li class="Node ExpandLeaf IsLast">
                                                                                             <div class="<?php echo!($item_3['content']) ? "IsLastmy" : "Expand"; ?>"></div>
                                                                                             <div class="Content">
                                                                                                 <a onclick="load_products('<?php echo $item_3['group_id']; ?>')">
-                                                                                                    <?php echo $item_3['name']; ?>
+                                    <?php echo $item_3['name']; ?>
                                                                                                 </a>
                                                                                             </div>
                                                                                         </li>
-                                                                                    <?php } ?>
+                                <?php } ?>
                                                                                 </ul>
-                                                                            <?php } ?>
+                                                                                <?php } ?>
                                                                         </li>
-                                                                    <?php } ?>
+                                                                        <?php } ?>
                                                                 </ul>
-                                                            <?php } ?>
+                                                                <?php } ?>
                                                         </li>
-                                                    <?php } ?>
+                                                        <?php } ?>
                                                 </ul>
-                                            <?php } ?>
+                                                <?php } ?>
 
                                             <?php
                                         }
@@ -536,17 +550,17 @@ text-shadow: -1px -1px 1px #075A71;
                                     ?>
                             </ul>
                             <div class="banner">
-                                <?php
-                                if ($banners) {
-                                    foreach ($banners as $banner) {
-                                        ?>
+    <?php
+    if ($banners) {
+        foreach ($banners as $banner) {
+            ?>
                                         <a href="<?php echo SITE_URL; ?>welcome/show_news/<?php echo $banner->banner_link_to_article; ?>" title="<?php echo $banner->banner_header; ?>">
                                             <img width="270px" src="<?php echo base_url() . "stuff/news_images/" . $banner->banner_photo; ?>">
                                         </a>
-                                        <?php
-                                    }
-                                }
-                                ?>
+            <?php
+        }
+    }
+    ?>
 
                             </div>
                         </div>
@@ -559,6 +573,6 @@ text-shadow: -1px -1px 1px #075A71;
                         <div class="angle_4"></div>
 
 
-                    <?php }
-                    ?>
+<?php }
+?>
 

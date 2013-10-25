@@ -283,8 +283,6 @@ EOH;
         if (!$action) {
             if (!$this->upload->do_upload('news_file')) {
                 $error = array('error' => $this->upload->display_errors());
-                var_dump($error);
-                die;
             } else {
                 $data = $this->upload->data();
                 $news_file = $data['file_name'];
@@ -311,6 +309,12 @@ EOH;
                 $data = $this->upload->data();
                 $news_file = $data['file_name'];
                 chmod($data['full_path'], 0777);
+
+                $file = $this->upload->data();
+                $uploaded_filename = $file['file_name'];
+                $source = $file['full_path'];
+                $cmd = "convert " . $source . " -resize 768x " . $source;
+                exec($cmd);
             }
 
             $news_id = $this->input->post('news_id');
@@ -342,6 +346,7 @@ EOH;
         foreach ($orders as $key => $order) {
             //var_dump($order->id); 
             $goods_on_order = $this->orders_model->find_product_from_order($order->id);
+
             $all_orders[$key]['order'] = $order;
             $all_orders[$key]['goods_on_order'] = $goods_on_order;
         }
@@ -517,6 +522,7 @@ EOH;
             $update_banner['on_flash'] = $this->input->post('on_flash');
             $update_banner['date'] = date('Y-m-d H:i:s');
             $update_banner['banner_link_to_article'] = $this->input->post('article_id');
+            $update_banner['banner_photo'] = $banner->banner_photo;
 
             if (!$this->upload->do_upload('banner_file')) {
                 
@@ -524,7 +530,7 @@ EOH;
                 $file = $this->upload->data();
                 $uploaded_filename = $file['file_name'];
                 $source = $file['full_path'];
-                $cmd = "convert " . $source . " -resize 268x " . $source;
+                $cmd = "convert " . $source . " -resize 768x " . $source;
                 exec($cmd);
                 $update_banner['banner_photo'] = $uploaded_filename;
             }
@@ -548,7 +554,7 @@ EOH;
             $file = $this->upload->data();
             $uploaded_filename = $file['file_name'];
             $source = $file['full_path'];
-            $cmd = "convert " . $source . " -resize 268x " . $source;
+            $cmd = "convert " . $source . " -resize 768x " . $source;
             exec($cmd);
             $insert_banner['banner_photo'] = $uploaded_filename;
             $insert_banner['banner_header'] = $this->input->post('title');
@@ -682,6 +688,10 @@ EOH;
             $file = $this->upload->data();
             $uploaded_filename = $file['file_name'];
 
+            $file = $this->upload->data();
+            $source = $file['full_path'];
+            $cmd = "convert " . $source . " -resize 768x " . $source;
+            exec($cmd);
 
             $config2['image_library'] = 'gd2';
             $config2['source_image'] = $config['upload_path'] . $uploaded_filename;

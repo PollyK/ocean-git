@@ -216,23 +216,32 @@ class User extends CI_Controller {
     public function orders() {
         $this->assign_left_panel($data);
         if ($user_id = $this->session->userdata('user_id')) {
+            $my_orders = false;
             $orders = $this->orders_model->get_my_orders($user_id);
             if ($orders) {
                 foreach ($orders as &$order) {
+
                     $order_id = $order->id;
                     $items = $this->headings_model->find_headings($order_id);
                     $sum = 0;
                     if ($items) {
+                        $place_item = false;
                         foreach ($items as $item) {
                             $product = $this->product_model->find_product_by_id($item->good_id);
-                            $sum += $product->price * $item->qty;
+                            if ($product) {
+                                $sum += $product->price * $item->qty;
+                                $sum = number_format($sum, 2, '.', '') . " руб.";
+                                $order->sum = $sum;
+                                $place_item = true;
+                            }
+                        }
+                        if ($place_item) {
+                            $my_orders[] = $order;
                         }
                     }
-                    $sum = number_format($sum, 2, '.', '') . " руб.";
-                    $order->sum = $sum;
                 }
             }
-            $data['orders'] = $orders;
+            $data['orders'] = $my_orders;
             $this->load->view('user/my_orders', $data);
         } else {
             redirect(SITE_URL . "welcome/catalog");
@@ -243,7 +252,7 @@ class User extends CI_Controller {
         $load_order_data = $this->session->userdata('view_order');
         $view_result_price = $this->session->userdata('view_result_price');
         $view_cart_count = $this->session->userdata('view_cart_count');
-        
+
         $this->session->set_userdata('cart_count', $view_cart_count);
         $this->session->set_userdata('cart_price', $view_result_price);
         $this->session->set_userdata('orders', $load_order_data);
@@ -254,21 +263,25 @@ class User extends CI_Controller {
         $this->session->unset_userdata('view_order');
         $this->session->unset_userdata('view_result_price');
         $this->session->unset_userdata('view_cart_count');
-        
+
         $this->assign_left_panel($data);
         if ($user_id = $this->session->userdata('user_id')) {
             $order = $this->orders_model->get_order($order_id);
             if ($order && $order->user_id == $user_id) {
                 $items = $this->headings_model->find_headings($order_id);
                 $orders = false;
+                $cart_items_amount = 0;
                 if ($items) {
                     $orders = array();
                     foreach ($items as &$item) {
                         $product = $this->product_model->find_product_by_id($item->good_id);
-                        $orders[] = array('art' => $product->article, 'count' => $item->qty);
+                        if ($product) {
+                            $orders[] = array('art' => $product->article, 'count' => $item->qty);
+                            $cart_items_amount++;
+                        }
                     }
                 }
-                $this->session->set_userdata('view_cart_count', count($items));
+                $this->session->set_userdata('view_cart_count', $cart_items_amount);
                 $this->session->set_userdata('view_order', $orders);
                 if ($orders) {
                     $result_price = 0;

@@ -27,8 +27,8 @@
                         <?php foreach ($one_order['goods_on_order'] as $good_on_order) { ?> 
                             <tr>
                                 <td><?php echo $good_on_order->article; ?></td>
-                                <td><?php echo $good_on_order->product_name . ' ' . $good_on_order->qty . $good_on_order->unit . ' по ' . $good_on_order->price; ?></td>
-                                <?php $sum += $good_on_order->qty * $good_on_order->price; ?>
+                                <td><?php echo $good_on_order->product_name . ' ' . $good_on_order->order_qty . $good_on_order->unit . ' по ' . $good_on_order->price; ?></td>
+                                <?php $sum += $good_on_order->order_qty * $good_on_order->price; ?>
                             <tr>
                             <?php } ?>     
                     </table>

@@ -107,8 +107,8 @@ class Welcome extends CI_Controller {
        if ($user_id = $this->session->userdata('user_id')) {
             $user_data = $this->user_model->get_user_by_id($user_id);
             if ($user_data) {
-                $data['order_name'] = $user_data->fio;
-                $data['order_phone'] = $user_data->phone;
+                $data['order_name'] = trim($user_data->fio)?$user_data->fio:get_cookie('order_name');
+                $data['order_phone'] = trim($user_data->phone)?$user_data->phone:get_cookie('order_phone');
                 $data['order_creds'] = get_cookie('order_creds');
             }
         } else {
@@ -126,7 +126,7 @@ class Welcome extends CI_Controller {
 
     function delete_cart_item($id) {
         $responce = new stdClass();
-
+        $orders_set = false;
         $orders = $this->session->userdata('orders');
         $cart_price = 0;
 
@@ -142,7 +142,8 @@ class Welcome extends CI_Controller {
                 }
             }
             //var_dump($orders_set);
-            $this->session->set_userdata('cart_count', count($orders_set));
+            $cart_count = ($orders_set)?count($orders_set):false;
+            $this->session->set_userdata('cart_count', $cart_count);
             $this->session->set_userdata('cart_price', $cart_price);
             $this->session->set_userdata('orders', $orders_set);
             $responce->total = $cart_price;
